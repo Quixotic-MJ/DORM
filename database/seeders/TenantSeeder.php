@@ -23,10 +23,10 @@ class TenantSeeder extends Seeder
             'total_occupants' => 2,
             'subscriptions' => 'Basic',
             'room_number' => '101',
-            'lease-end' => '2024-12-31',
+            'lease_end' => '2024-12-31',
             'total_paid' => 5000,
             'due_amount' => 1000,
-            'status' => 'Active'
+            'status' => 'Paid'
         ]);
 
         Tenant::create([
@@ -37,10 +37,10 @@ class TenantSeeder extends Seeder
             'total_occupants' => 1,
             'subscriptions' => 'Premium',
             'room_number' => '202',
-            'lease-end' => '2024-10-15',
+            'lease_end' => '2024-10-15',
             'total_paid' => 7500,
             'due_amount' => 0,
-            'status' => 'Active'
+            'status' => 'Paid'
         ]);
 
         Tenant::create([
@@ -51,10 +51,10 @@ class TenantSeeder extends Seeder
             'total_occupants' => 3,
             'subscriptions' => 'Standard',
             'room_number' => '305',
-            'lease-end' => '2025-01-20',
+            'lease_end' => '2025-01-20',
             'total_paid' => 3000,
             'due_amount' => 2000,
-            'status' => 'Active'
+            'status' => 'Overdued'
         ]);
     }
 }

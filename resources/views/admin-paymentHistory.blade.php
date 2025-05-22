@@ -243,7 +243,7 @@
                                 class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Edit Profile
                             </button>
-                            <a href="landing_page1.html"
+                            <a href="{{ url('/') }}"
                                 class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Log Out
                             </a>
@@ -322,8 +322,32 @@
             </div>
         </div>
 
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-4 gap-4 my-6 text-white">
+            <div class="bg-gray-800 p-4 rounded-lg text-center">
+                <div class="text-orange-400 text-2xl">👨‍👩‍👧‍👦</div>
+                <p class="font-normal">Total Tenants</p>
+                <p class="text-lg font-semibold">{{ $totalTenants }}</p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg text-center">
+                <div class="text-green-400 text-2xl">💰</div>
+                <p class="font-normal">Total balance</p>
+                <p class="text-lg font-semibold">${{ number_format($totalBalance, 2) }}</p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg text-center">
+                <div class="text-blue-400 text-2xl">🏠</div>
+                <p class="font-normal">Rooms Available</p>
+                <p class="text-lg font-semibold">{{ $availableRooms }}</p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg text-center">
+                <div class="text-cyan-400 text-2xl">🛠️</div>
+                <p class="font-normal">Pending Request</p>
+                <p class="text-lg font-semibold">{{ $pendingRequests }}</p>
+            </div>
+        </div>
+
         <!-- Dynamic content section -->
-        <section class="container px-4 mx-auto mt-24">
+        <section class="container px-4 mx-auto mt-8">
             <div class="flex flex-col">
                 <div class="-mx-4 -my-2 overflow-x-auto scrollbar-hide max-h-128 sm:-mx-6 lg:-mx-8">
                     <div class="inline-block min-w-full max-h-96 align-middle md:px-6 lg:px-4">
@@ -355,57 +379,66 @@
                                         <th scope="col"
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             Check-out</th>
-                                        <th scope="col" class="relative py-3.5 px-4"><span
-                                                class="sr-only">Actions</span></th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    <tr v-for="id in ['3066']" :key="id">
+                                    @forelse($tenants as $tenant)
+                                    <tr>
                                         <td
                                             class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
-                                                <span>#@{{id}}</span>
+                                                <span>#{{ $tenant->tenant_id }}</span>
                                             </div>
                                         </td>
                                         <td
                                             class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            $@{{Math.floor(Math.random() * 1000)}}.@{{String(Math.floor(Math.random()
-                                            * 100)).padStart(2, '0')}}
+                                            ${{ number_format($tenant->total_paid, 2) }}
                                         </td>
                                         <td
                                             class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            $@{{Math.floor(Math.random() * 1000)}}.@{{String(Math.floor(Math.random()
-                                            * 100)).padStart(2, '0')}}
+                                            ${{ number_format($tenant->due_amount, 2) }}
                                         </td>
-
-                                        <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                            <div :class="[
-                                                    'inline-flex items-center px-3 py-1 rounded-full gap-x-2',
-                                                    parseInt(id) % 2 === 0
-                                                    ? 'text-emerald-500 bg-emerald-100/60 dark:bg-gray-800'
-                                                    : 'text-red-500 bg-red-100/60 dark:bg-gray-800'
-                                                    ]">
+                                        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                            @if($tenant->status == 'Paid')
+                                            <div
+                                                class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
                                                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        :d="parseInt(id) % 2 === 0 ? 'M10 3L4.5 8.5L2 6' : 'M9 3L3 9M3 3L9 9'"
-                                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                    <path d="M10 3L4.5 8.5L2 6" stroke="currentColor"
+                                                        stroke-width="1.5" stroke-linecap="round"
                                                         stroke-linejoin="round" />
                                                 </svg>
-                                                <h2 class="text-sm font-normal">@{{parseInt(id) % 2 === 0 ? 'Paid' :
-                                                    'Overdue'}}</h2>
+                                                <h2 class="text-sm font-normal">Paid</h2>
                                             </div>
+                                            @else
+                                            <div
+                                                class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9 3L3 9M3 3L9 9" stroke="currentColor"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                                <h2 class="text-sm font-normal">Overdue</h2>
+                                            </div>
+                                            @endif
                                         </td>
                                         <td
                                             class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            @{{parseInt(id) % 3 === 0 ? 'Premium' : (parseInt(id) % 2 === 0 ? 'Student' :
-                                            'Regular')}}
+                                            {{ $tenant->subscriptions }}
                                         </td>
                                         <td
                                             class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            Jan 5, 2022
+                                            {{ $tenant->lease_end }}
                                         </td>
                                     </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="6" class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300">
+                                            No payment history found
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

@@ -242,7 +242,7 @@
                                 class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Edit Profile
                             </button>
-                            <a href="landing_page1.html"
+                            <a href="{{ url('/') }}"
                                 class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Log Out
                             </a>
@@ -329,62 +329,79 @@
             <!-- Dormitory Settings -->
             <section class="bg-white dark:bg-gray-900">
                 <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit </h2>
-                    <form action="#">
+                    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Edit Dormitory Settings</h2>
+
+                    @if(session('success'))
+                        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('admin.update-dorm-settings') }}" method="POST">
+                        @csrf
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
                             <div class="w-full">
-                                <label for="brand"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
-                                <p type="text" name="brand" id="brand"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Product brand" required="">Student Plan</p>
+                                <label for="student_plan_label"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plan Type</label>
+                                <p id="student_plan_label"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    Student Plan
+                                </p>
                             </div>
                             <div class="w-full">
-                                <label for="price"
+                                <label for="student_plan"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                <input type="number" name="price" id="price"
+                                <input type="number" name="student_plan" id="student_plan"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="$2999" required="">
+                                    placeholder="Enter price" value="{{ $settings['pricing']['student_plan'] }}" required>
+                            </div>
+
+                            <div class="w-full">
+                                <label for="regular_plan_label"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plan Type</label>
+                                <p id="regular_plan_label"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    Regular Plan
+                                </p>
                             </div>
                             <div class="w-full">
-
-                                <p type="text" name="brand" id="brand"
+                                <label for="regular_plan"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                                <input type="number" name="regular_plan" id="regular_plan"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Product brand" required="">Regular Plan</p>
+                                    placeholder="Enter price" value="{{ $settings['pricing']['regular_plan'] }}" required>
+                            </div>
+
+                            <div class="w-full">
+                                <label for="vip_plan_label"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plan Type</label>
+                                <p id="vip_plan_label"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    Premium Plan
+                                </p>
                             </div>
                             <div class="w-full">
-
-                                <input type="number" name="price" id="price"
+                                <label for="vip_plan"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                                <input type="number" name="vip_plan" id="vip_plan"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="$3999" required="">
-                            </div>
-                            <div class="w-full">
-
-                                <p type="text" name="brand" id="brand"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Product brand" required="">Premium Plan</p>
-                            </div>
-                            <div class="w-full">
-
-                                <input type="number" name="price" id="price"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="$4999" required="">
+                                    placeholder="Enter price" value="{{ $settings['pricing']['vip_plan'] }}" required>
                             </div>
 
                             <div class="sm:col-span-2">
-                                <label for="description"
+                                <label for="rules"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Edit
                                     Rules</label>
-                                <textarea id="description" rows="8"
+                                <textarea id="rules" name="rules" rows="8"
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Your description here"></textarea>
+                                    placeholder="Enter dormitory rules">{{ $settings['rules'] }}</textarea>
                             </div>
                         </div>
 
                         <button type="submit"
                             class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-m font-medium text-center text-gray-900 bg-[#ffc329] rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800 hover:text-[#ffc329]">
-                            Save
+                            Save Changes
                         </button>
                     </form>
                 </div>

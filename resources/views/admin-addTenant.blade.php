@@ -250,7 +250,7 @@
                                     class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                     Edit Profile
                                 </button>
-                                <a href="landing_page1.html"
+                                <a href="{{ url('/') }}"
                                     class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                     Log Out
                                 </a>
@@ -391,30 +391,47 @@
                                         Add Tenant Information
                                     </h3>
                                     <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                        Your new project has been created. Invite your
-                                        team to collaborate on this project.
+                                        Add a new tenant to the dormitory system. Fill in all required information below.
                                     </p>
 
-                                    <form class="mt-4" action="#">
-                                        <label for="emails-list" class="text-sm text-gray-700 dark:text-gray-200">
+                                    <form class="mt-4" action="{{ route('admin.store-tenant') }}" method="POST" id="tenantForm" @submit.prevent="showConfirmation">
+                                        @csrf
+                                        <label for="tenant_name" class="text-sm text-gray-700 dark:text-gray-200">
                                             Basic Information
                                         </label>
-                                        <label class="block mt-2 text-white" for="email">
+
+                                        @if(session('success'))
+                                        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
+                                            {{ session('success') }}
+                                        </div>
+                                        @endif
+
+                                        @if ($errors->any())
+                                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        @endif
+
+                                        <label class="block mt-2 text-white" for="tenant_name">
                                             Name
-                                            <input type="text" name="email" id="email" placeholder="Full Name"
+                                            <input type="text" name="tenant_name" id="tenant_name" placeholder="Full Name" required
                                                 class="mt-2 block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                                         </label>
 
-                                        <label class="block mt-2 text-white" for="email">
+                                        <label class="block mt-2 text-white" for="tenant_contact">
                                             Contact
-                                            <input type="text" name="email" id="email" placeholder="XXXX-XXX-XXX"
+                                            <input type="text" name="tenant_contact" id="tenant_contact" placeholder="XXXX-XXX-XXX" required
                                                 class="mt-2 block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                                         </label>
 
-                                        <label class="block mt-3 text-white" for="email">
+                                        <label class="block mt-3 text-white" for="total_occupants">
                                             Total Occupants
-                                            <select name="" id=""
-                                                class="mt-2 block w-full px-4 py-3 text-sm text-gray-700 bg-white  rounded-md focus:border-[#ffc329] focus:outline-none focus:ring  focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 ">
+                                            <select name="total_occupants" id="total_occupants" required
+                                                class="mt-2 block w-full px-4 py-3 text-sm text-gray-700 bg-white rounded-md focus:border-[#ffc329] focus:outline-none focus:ring focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -424,27 +441,28 @@
                                             </select>
                                         </label>
 
-                                        <label class="block mt-2 text-white" for="email">
+                                        <label class="block mt-2 text-white" for="room_number">
                                             Room Number
-                                            <input type="number" name="email" id="email" placeholder="Room no."
+                                            <input type="number" name="room_number" id="room_number" placeholder="Room no." required
                                                 class="mt-2 block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                                         </label>
 
-                                        <label class="block mt-3 text-white" for="email">
+                                        <label class="block mt-3 text-white" for="subscriptions">
                                             Subscriptions
-                                            <select name="" id=""
-                                                class="mt-2 block w-full px-4 py-3 text-sm text-gray-700 bg-white  rounded-md focus:border-[#ffc329] focus:outline-none focus:ring  focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 ">
+                                            <select name="subscriptions" id="subscriptions" required
+                                                class="mt-2 block w-full px-4 py-3 text-sm text-gray-700 bg-white rounded-md focus:border-[#ffc329] focus:outline-none focus:ring focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300">
                                                 <option value="Student Plan">Student Plan</option>
                                                 <option value="Regular Plan">Regular Plan</option>
                                                 <option value="Premium Plan">Premium Plan</option>
                                             </select>
                                         </label>
 
-
-                                        <div id="date-range-picker" date-rangepicker class="flex items-center mt-6">
-                                            <div class="relative">
-                                                <div
-                                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                        <div class="flex items-center mt-6">
+                                            <div class="relative w-full">
+                                                <label class="block mb-2 text-white" for="start_date">
+                                                    Start Date
+                                                </label>
+                                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none mt-8">
                                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400"
                                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                         fill="currentColor" viewBox="0 0 20 20">
@@ -452,14 +470,15 @@
                                                             d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                                     </svg>
                                                 </div>
-                                                <input id="datepicker-range-start" name="start" type="text"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="Select date start">
+                                                <input id="start_date" name="start_date" type="date" required
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             </div>
-                                            <span class="mx-4 text-gray-500">to</span>
-                                            <div class="relative">
-                                                <div
-                                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+
+                                            <div class="relative w-full ml-4">
+                                                <label class="block mb-2 text-white" for="end_date">
+                                                    End Date
+                                                </label>
+                                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none mt-8">
                                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400"
                                                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                         fill="currentColor" viewBox="0 0 20 20">
@@ -467,13 +486,10 @@
                                                             d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                                     </svg>
                                                 </div>
-                                                <input id="datepicker-range-end" name="end" type="text"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    placeholder="Select date end">
+                                                <input id="end_date" name="end_date" type="date" required
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             </div>
                                         </div>
-
-
 
                                         <div class="mt-6 sm:flex sm:items-center sm:-mx-2">
                                             <button type="button" @click="isAddTenant = false"
@@ -481,9 +497,9 @@
                                                 Cancel
                                             </button>
 
-                                            <button type="button" @click="toggledReceipt"
+                                            <button type="submit"
                                                 class="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-gray-900 capitalize transition-colors duration-300 transform bg-[#ffc329] rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-gray-900 hover:text-[#ffc329] focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
-                                                Add
+                                                Add Tenant
                                             </button>
                                         </div>
                                     </form>
@@ -526,24 +542,32 @@
                                             <!-- Order Details -->
                                             <div class="mt-4 border-t border-gray-200 pt-4 text-sm">
                                                 <div class="flex justify-between py-1">
-                                                    <span class="text-[#ffc329]">Tenant No.:</span>
-                                                    <span class="font-medium">#5033</span>
-                                                </div>
-                                                <div class="flex justify-between py-1">
-                                                    <span class="text-[#ffc329]">Subscription Type:</span>
-                                                    <span>Student Plan</span>
+                                                    <span class="text-[#ffc329]">Name:</span>
+                                                    <span>@{{ formData.tenant_name }}</span>
                                                 </div>
                                                 <div class="flex justify-between py-1">
                                                     <span class="text-[#ffc329]">Contact:</span>
-                                                    <span>0964-456-789</span>
+                                                    <span>@{{ formData.tenant_contact }}</span>
                                                 </div>
                                                 <div class="flex justify-between py-1">
-                                                    <span class="text-[#ffc329]">Name:</span>
-                                                    <span>John Mark</span>
+                                                    <span class="text-[#ffc329]">Room Number:</span>
+                                                    <span>@{{ formData.room_number }}</span>
+                                                </div>
+                                                <div class="flex justify-between py-1">
+                                                    <span class="text-[#ffc329]">Subscription Type:</span>
+                                                    <span>@{{ formData.subscriptions }}</span>
+                                                </div>
+                                                <div class="flex justify-between py-1">
+                                                    <span class="text-[#ffc329]">Total Occupants:</span>
+                                                    <span>@{{ formData.total_occupants }}</span>
+                                                </div>
+                                                <div class="flex justify-between py-1">
+                                                    <span class="text-[#ffc329]">Tenant ID:</span>
+                                                    <span>@{{ formData.tenant_id }}</span>
                                                 </div>
                                                 <div class="flex justify-between py-1">
                                                     <span class="text-[#ffc329]">Password:</span>
-                                                    <span>HopelessRomantic</span>
+                                                    <span>@{{ formData.password }}</span>
                                                 </div>
                                             </div>
 
@@ -552,16 +576,14 @@
                                                 <table class="w-full text-left">
                                                     <thead>
                                                         <tr class="border-b border-gray-200">
-                                                            <th class="w-20 pb-2 font-medium">Lease-end</th>
-                                                            <th class="w-12 pb-2 text-left font-medium">Tenants</th>
-                                                            <th class="w-16 pb-2 pl-6 text-left font-medium">Total</th>
+                                                            <th class="w-20 pb-2 font-medium">Start Date</th>
+                                                            <th class="w-20 pb-2 font-medium">End Date</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr class="border-b border-gray-100">
-                                                            <td class="py-2">Jan 5, 2023</td>
-                                                            <td class="text-left">4</td>
-                                                            <td class="text-center">$1200.00</td>
+                                                            <td class="py-2">@{{ formData.start_date }}</td>
+                                                            <td class="py-2">@{{ formData.end_date }}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -598,10 +620,126 @@
                                 </div>
 
                                 <!-- Footer Actions -->
-                                <div class="bg-gray-800 px-4 py-3 flex justify-center">
+                                <div class="bg-gray-800 px-4 py-3 flex justify-center space-x-4">
                                     <button type="button" @click="confirmation = false"
-                                        class="inline-flex w-full justify-center rounded-md border border-transparent bg-[#ffc329] px-4 py-2 text-base font-medium text-gray-900 shadow-sm hover:bg-gray-900 hover:text-[#ffc329] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">
+                                        class="inline-flex justify-center rounded-md border border-gray-300 bg-gray-700 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:w-auto sm:text-sm">
+                                        Cancel
+                                    </button>
+                                    <button type="button" @click="submitForm"
+                                        class="inline-flex justify-center rounded-md border border-transparent bg-[#ffc329] px-4 py-2 text-base font-medium text-gray-900 shadow-sm hover:bg-gray-900 hover:text-[#ffc329] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto sm:text-sm">
                                         Confirm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Archive Confirmation Modal -->
+                    <div v-if="archiveConfirmation" class="fixed inset-0 z-50 overflow-y-auto">
+                        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+                            @click="archiveConfirmation = false"></div>
+
+                        <div class="flex min-h-full items-center justify-center p-4">
+                            <div
+                                class="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm">
+                                <button @click="archiveConfirmation = false"
+                                    class="absolute right-2 top-2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+
+                                <!-- Archive Confirmation Content -->
+                                <div class="bg-gray-800 text-gray-300 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                    <div class="sm:flex sm:items-start">
+                                        <div class="w-full text-center">
+                                            <div class="mt-3 text-center sm:mt-5">
+                                                <h3 class="text-lg font-medium leading-6 text-[#ffc329]">Archive Tenant</h3>
+                                                <p class="mt-2 text-sm text-gray-400">
+                                                    Are you sure you want to archive this tenant? This action will remove the tenant from the active list and move them to the archive.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer Actions -->
+                                <div class="bg-gray-800 px-4 py-3 flex justify-center space-x-4">
+                                    <button type="button" @click="archiveConfirmation = false"
+                                        class="inline-flex justify-center rounded-md border border-gray-300 bg-gray-700 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:w-auto sm:text-sm">
+                                        Cancel
+                                    </button>
+                                    <button type="button" @click="archiveTenant"
+                                        class="inline-flex justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto sm:text-sm">
+                                        Archive
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Extend Modal -->
+                    <div v-if="extendModal" class="fixed inset-0 z-50 overflow-y-auto">
+                        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+                            @click="extendModal = false"></div>
+
+                        <div class="flex min-h-full items-center justify-center p-4">
+                            <div
+                                class="relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm">
+                                <button @click="extendModal = false"
+                                    class="absolute right-2 top-2 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+
+                                <!-- Extend Content -->
+                                <div class="bg-gray-800 text-gray-300 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                    <div class="sm:flex sm:items-start">
+                                        <div class="w-full text-center">
+                                            <div class="mt-3 text-center sm:mt-5">
+                                                <h3 class="text-lg font-medium leading-6 text-[#ffc329]">Extend Lease</h3>
+                                                <p class="mt-2 text-sm text-gray-400">
+                                                    Current end date: @{{ currentEndDate }}
+                                                </p>
+                                            </div>
+
+                                            <form id="extendForm" class="mt-4" @submit.prevent="extendTenant">
+                                                <div class="relative w-full">
+                                                    <label class="block mb-2 text-white" for="new_end_date">
+                                                        New End Date
+                                                    </label>
+                                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none mt-8">
+                                                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                            fill="currentColor" viewBox="0 0 20 20">
+                                                            <path
+                                                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <input v-model="newEndDate" id="new_end_date" name="new_end_date" type="date" required
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer Actions -->
+                                <div class="bg-gray-800 px-4 py-3 flex justify-center space-x-4">
+                                    <button type="button" @click="extendModal = false"
+                                        class="inline-flex justify-center rounded-md border border-gray-300 bg-gray-700 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 sm:w-auto sm:text-sm">
+                                        Cancel
+                                    </button>
+                                    <button type="button" @click="extendTenant"
+                                        class="inline-flex justify-center rounded-md border border-transparent bg-[#ffc329] px-4 py-2 text-base font-medium text-gray-900 shadow-sm hover:bg-gray-900 hover:text-[#ffc329] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto sm:text-sm">
+                                        Extend
                                     </button>
                                 </div>
                             </div>
@@ -614,20 +752,24 @@
                     <div class="mt-6 md:flex md:items-center md:justify-between">
                         <div
                             class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
-                            <button
-                                class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                            <button @click="filterTenants('all')"
+                                :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'all'}"
+                                class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                                 View all
                             </button>
-                            <button
-                                class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                            <button @click="filterTenants('Student Plan')"
+                                :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Student Plan'}"
+                                class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                                 Student Plan
                             </button>
-                            <button
-                                class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                            <button @click="filterTenants('Regular Plan')"
+                                :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Regular Plan'}"
+                                class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                                 Regular Plan
                             </button>
-                            <button
-                                class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                            <button @click="filterTenants('Premium Plan')"
+                                :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Premium Plan'}"
+                                class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                                 Premium Plan
                             </button>
                         </div>
@@ -645,7 +787,7 @@
 
                             </span>
 
-                            <input type="text" value="" placeholder="Search Tenant ID"
+                            <input type="text" v-model="searchQuery" @input="filterTenants(currentFilter)" placeholder="Search Tenant ID or Name"
                                 class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
                         </div>
                     </div>
@@ -661,11 +803,10 @@
                                     </svg>
                                 </div>
                                 <h1 class="mt-3 text-lg text-gray-800 dark:text-white">No Tenant found</h1>
-                                <p class="mt-2 text-gray-500 dark:text-gray-400">Your search “Tenant ID” did not match
-                                    any
-                                    Tenant. Please try again or create add a new Tenant.</p>
+                                <p class="mt-2 text-gray-500 dark:text-gray-400">Your search "@{{ searchQuery }}" did not match
+                                    any tenant. Please try again or add a new tenant.</p>
                                 <div class="flex items-center mt-4 sm:mx-auto gap-x-3">
-                                    <button
+                                    <button @click="clearSearch"
                                         class="w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
                                         Clear Search
                                     </button>
@@ -743,23 +884,23 @@
                                                 </thead>
                                                 <tbody
                                                     class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                                    <tr>
+                                                    <tr v-for="tenant in filteredTenants" :key="tenant.id">
                                                         <td
                                                             class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                             <div class="inline-flex items-center gap-x-3">
                                                                 <input type="checkbox"
                                                                     class="text-blue-500 border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700">
 
-                                                                <span>#3066</span>
+                                                                <span>@{{ tenant.tenant_id }}</span>
                                                             </div>
                                                         </td>
                                                         <td
                                                             class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                            Jan 6, 2022
+                                                            @{{ tenant.lease_end }}
                                                         </td>
                                                         <td
                                                             class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                            1
+                                                            @{{ tenant.room_number }}
                                                         </td>
                                                         <td
                                                             class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -772,7 +913,7 @@
                                                                         stroke-linejoin="round" />
                                                                 </svg>
 
-                                                                <h2 class="text-sm font-normal">Paid</h2>
+                                                                <h2 class="text-sm font-normal">@{{ tenant.status }}</h2>
                                                             </div>
                                                         </td>
                                                         <td
@@ -781,38 +922,36 @@
                                                                 <div>
                                                                     <h2
                                                                         class="text-sm font-medium text-gray-800 dark:text-white ">
-                                                                        Arthur Melo</h2>
+                                                                        @{{ tenant.tenant_name }}</h2>
                                                                     <p
                                                                         class="text-xs font-normal text-gray-600 dark:text-gray-400">
-                                                                        0923-0919-234
+                                                                        @{{ tenant.tenant_contact }}
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td
                                                             class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                            4/6
+                                                            @{{ tenant.total_occupants }}/6
                                                         </td>
                                                         <td
                                                             class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                            Student Plan
+                                                            @{{ tenant.subscriptions }}
                                                         </td>
 
                                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                             <div class="flex items-center gap-x-6">
-                                                                <button
+                                                                <button @click="showArchiveConfirmation(tenant.id)"
                                                                     class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
                                                                     Archive
                                                                 </button>
 
-                                                                <button
+                                                                <button @click="showExtendModal(tenant.id, tenant.lease_end)"
                                                                     class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                                                     Extend
                                                                 </button>
                                                             </div>
                                                         </td>
                                                     </tr>
-
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -846,10 +985,30 @@
                     isRegularInfoOpen: false,
                     isVIPInfoOpen: false,
                     isAddTenant: false,
-                    isEmpty: true,
+                    isEmpty: {{ $tenants->isEmpty() ? 'true' : 'false' }},
                     confirmation: false,
-                    ShowTenants: false,
+                    archiveConfirmation: false,
+                    extendModal: false,
+                    ShowTenants: {{ $showTenants ? 'true' : 'false' }},
                     adminTitle: 'Add Tenants',
+                    tenants: @json($tenants),
+                    filteredTenants: @json($tenants),
+                    currentFilter: 'all',
+                    formData: {
+                        tenant_name: '',
+                        tenant_contact: '',
+                        total_occupants: '',
+                        room_number: '',
+                        subscriptions: '',
+                        start_date: '',
+                        end_date: '',
+                        tenant_id: '',
+                        password: 'password123'
+                    },
+                    selectedTenantId: null,
+                    currentEndDate: '',
+                    newEndDate: '',
+                    searchQuery: '',
 
                     // Clock Data
                     time: {
@@ -897,6 +1056,94 @@
                     this.isAddTenant = !this.isAddTenant;
                     this.confirmation = !this.confirmation;
                 },
+                showConfirmation(event) {
+                    // Get form data
+                    const form = document.getElementById('tenantForm');
+                    const formData = new FormData(form);
+
+                    // Update formData object
+                    this.formData.tenant_name = formData.get('tenant_name');
+                    this.formData.tenant_contact = formData.get('tenant_contact');
+                    this.formData.total_occupants = formData.get('total_occupants');
+                    this.formData.room_number = formData.get('room_number');
+                    this.formData.subscriptions = formData.get('subscriptions');
+                    this.formData.start_date = formData.get('start_date');
+                    this.formData.end_date = formData.get('end_date');
+
+                    // Generate a tenant ID in 10001 format
+                    const baseNum = 10000;
+                    const randomNum = Math.floor(Math.random() * 9000) + 1; // Random number between 1 and 9000
+                    this.formData.tenant_id = (baseNum + randomNum).toString();
+
+                    // Show confirmation modal
+                    this.confirmation = true;
+                },
+                submitForm() {
+                    // Add tenant_id as a hidden field to the form
+                    const form = document.getElementById('tenantForm');
+
+                    // Check if tenant_id hidden field already exists
+                    let tenantIdField = form.querySelector('input[name="tenant_id"]');
+                    if (!tenantIdField) {
+                        tenantIdField = document.createElement('input');
+                        tenantIdField.type = 'hidden';
+                        tenantIdField.name = 'tenant_id';
+                        form.appendChild(tenantIdField);
+                    }
+                    tenantIdField.value = this.formData.tenant_id;
+
+                    // Submit the form
+                    form.submit();
+                },
+                showArchiveConfirmation(tenantId) {
+                    this.selectedTenantId = tenantId;
+                    this.archiveConfirmation = true;
+                },
+                archiveTenant() {
+                    // Create a form and submit it
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '{{ route('admin.archive-tenant', ':id') }}'.replace(':id', this.selectedTenantId);
+
+                    // Add CSRF token
+                    const csrfToken = document.createElement('input');
+                    csrfToken.type = 'hidden';
+                    csrfToken.name = '_token';
+                    csrfToken.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfToken);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                },
+                showExtendModal(tenantId, endDate) {
+                    this.selectedTenantId = tenantId;
+                    this.currentEndDate = endDate;
+                    this.newEndDate = '';
+                    this.extendModal = true;
+                },
+                extendTenant() {
+                    // Create a form and submit it
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '{{ route('admin.extend-tenant', ':id') }}'.replace(':id', this.selectedTenantId);
+
+                    // Add CSRF token
+                    const csrfToken = document.createElement('input');
+                    csrfToken.type = 'hidden';
+                    csrfToken.name = '_token';
+                    csrfToken.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfToken);
+
+                    // Add new end date
+                    const newEndDateInput = document.createElement('input');
+                    newEndDateInput.type = 'hidden';
+                    newEndDateInput.name = 'new_end_date';
+                    newEndDateInput.value = this.newEndDate;
+                    form.appendChild(newEndDateInput);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                },
                 toggleNotificationModal() {
                     this.isNotificationModalOpen = !this.isNotificationModalOpen;
                     this.isOpen = false;
@@ -936,6 +1183,35 @@
                         month: 'long',
                         day: 'numeric'
                     });
+                },
+                filterTenants(filter) {
+                    if (filter) {
+                        this.currentFilter = filter;
+                    }
+
+                    // First filter by subscription type
+                    let result = this.tenants;
+                    if (this.currentFilter !== 'all') {
+                        result = result.filter(tenant => tenant.subscriptions === this.currentFilter);
+                    }
+
+                    // Then filter by search query if it exists
+                    if (this.searchQuery.trim() !== '') {
+                        const query = this.searchQuery.toLowerCase().trim();
+                        result = result.filter(tenant =>
+                            (tenant.tenant_id && tenant.tenant_id.toLowerCase().includes(query)) ||
+                            (tenant.tenant_name && tenant.tenant_name.toLowerCase().includes(query))
+                        );
+                    }
+
+                    this.filteredTenants = result;
+
+                    // Update isEmpty based on filtered results
+                    this.isEmpty = result.length === 0;
+                },
+                clearSearch() {
+                    this.searchQuery = '';
+                    this.filterTenants(this.currentFilter);
                 }
             },
             mounted() {

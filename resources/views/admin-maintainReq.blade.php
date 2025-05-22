@@ -322,7 +322,7 @@
                                 class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Edit Profile
                             </button>
-                            <a href="landing_page1.html"
+                            <a href="{{ url('/') }}"
                                 class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Log Out
                             </a>
@@ -424,7 +424,32 @@
 
 
         <section>
-            <section class="container px-4 mx-auto mt-24">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-4 gap-4 my-6 text-white">
+                <div class="bg-gray-800 p-4 rounded-lg text-center">
+                    <div class="text-orange-400 text-2xl">👨‍👩‍👧‍👦</div>
+                    <p class="font-normal">Total Tenants</p>
+                    <p class="text-lg font-semibold">{{ $totalTenants }}</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg text-center">
+                    <div class="text-green-400 text-2xl">💰</div>
+                    <p class="font-normal">Total balance</p>
+                    <p class="text-lg font-semibold">${{ number_format($totalBalance, 2) }}</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg text-center">
+                    <div class="text-blue-400 text-2xl">🏠</div>
+                    <p class="font-normal">Rooms Available</p>
+                    <p class="text-lg font-semibold">{{ $availableRooms }}</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg text-center">
+                    <div class="text-cyan-400 text-2xl">🛠️</div>
+                    <p class="font-normal">Pending Request</p>
+                    <p class="text-lg font-semibold">{{ $pendingRequests }}</p>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <section class="container px-4 mx-auto mt-8">
                 <div class="flex flex-col">
                     <div class="-mx-4 -my-2 overflow-x-auto scrollbar-hide max-h-128 sm:-mx-6 lg:-mx-8">
                         <div class="inline-block min-w-full max-h-128 align-middle md:px-6 lg:px-4">
@@ -457,7 +482,7 @@
                                             </th>
                                             <th scope="col"
                                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Purchase
+                                                Description
                                             </th>
                                             <th scope="col" class="relative py-3.5 px-4">
                                                 <span class="sr-only">Actions</span>
@@ -466,17 +491,19 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                        @forelse($maintenanceRequests as $request)
                                         <tr>
                                             <td
                                                 class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div class="inline-flex items-center gap-x-3">
-                                                    <span>#3066</span>
+                                                    <span>#{{ $request->room_number }}</span>
                                                 </div>
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                Jan 6, 2022</td>
+                                                {{ $request->date }}</td>
                                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                @if($request->status == 'Completed')
                                                 <div
                                                     class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
                                                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
@@ -485,46 +512,75 @@
                                                             stroke-width="1.5" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                     </svg>
-
-                                                    <h2 class="text-sm font-normal">Paid</h2>
+                                                    <h2 class="text-sm font-normal">Completed</h2>
                                                 </div>
+                                                @elseif($request->status == 'In Progress')
+                                                <div
+                                                    class="inline-flex items-center px-3 py-1 text-blue-500 rounded-full gap-x-2 bg-blue-100/60 dark:bg-gray-800">
+                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M6 1v10M1 6h10" stroke="currentColor"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <h2 class="text-sm font-normal">In Progress</h2>
+                                                </div>
+                                                @else
+                                                <div
+                                                    class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M9 3L3 9M3 3L9 9" stroke="currentColor"
+                                                            stroke-width="1.5" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
+                                                    <h2 class="text-sm font-normal">Pending</h2>
+                                                </div>
+                                                @endif
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 <div class="flex items-center gap-x-2">
                                                     <div>
                                                         <h2 class="text-sm font-medium text-gray-800 dark:text-white ">
-                                                            Arthur Melo</h2>
+                                                            {{ $request->tenant_name }}</h2>
                                                         <p class="text-xs font-normal text-gray-600 dark:text-gray-400">
-                                                            1234-456-787</p>
+                                                            {{ $request->tenant_contact }}</p>
                                                     </div>
                                                 </div>
                                             </td>
-
+                                            <td
+                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                {{ $request->description }}
+                                            </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                 <div class="flex items-center gap-x-6">
                                                     <button
                                                         class="text-gray-500 transition-colors duration-200 hover:underline dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                        Read
+                                                        View
                                                     </button>
 
                                                     <button
                                                         class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                        Manage Repair
+                                                        Manage
                                                     </button>
                                                 </div>
                                             </td>
                                         </tr>
-
+                                        @empty
+                                        <tr>
+                                            <td colspan="6" class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300">
+                                                No maintenance requests found
+                                            </td>
+                                        </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </section>
-
         </section>
 
     </main>

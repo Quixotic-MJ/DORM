@@ -288,10 +288,7 @@
                                 <div>
                                     <div>
                                         <p class="mt-2 text-sm text-gray-500 dark:text-gray-300">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident placeat,
-                                            consequatur eveniet veritatis quos dignissimos beatae dolores exercitationem
-                                            laboriosam officia magnam atque blanditiis illum doloremque magni ex
-                                            corrupti tempora quis.
+                                            {{ $rules }}
                                         </p>
                                     </div>
                                 </div>

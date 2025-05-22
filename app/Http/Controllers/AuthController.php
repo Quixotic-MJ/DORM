@@ -38,7 +38,7 @@ class AuthController extends Controller
                 // Tenant authentication passed
                 return response()->json([
                     'success' => true,
-                    'redirect' => '/dashboard'
+                    'redirect' => '/tenant/homepage'
                 ]);
             }
 

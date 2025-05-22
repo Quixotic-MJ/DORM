@@ -243,7 +243,7 @@
                                 class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Edit Profile
                             </button>
-                            <a href="landing_page1.html"
+                            <a href="{{ url('/') }}"
                                 class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Log Out
                             </a>
@@ -355,20 +355,24 @@
                 <div class="mt-6 md:flex md:items-center md:justify-between">
                     <div
                         class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
-                        <button
-                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                        <button @click="filterTenants('all')"
+                            :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'all'}"
+                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                             View all
                         </button>
-                        <button
-                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                        <button @click="filterTenants('Student Plan')"
+                            :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Student Plan'}"
+                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                             Student Plan
                         </button>
-                        <button
-                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                        <button @click="filterTenants('Regular Plan')"
+                            :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Regular Plan'}"
+                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                             Regular Plan
                         </button>
-                        <button
-                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                        <button @click="filterTenants('Premium Plan')"
+                            :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Premium Plan'}"
+                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                             Premium Plan
                         </button>
                     </div>
@@ -386,7 +390,7 @@
 
                         </span>
 
-                        <input type="text" value="" placeholder="Search Tenant ID"
+                        <input type="text" v-model="searchQuery" @input="filterTenants(currentFilter)" placeholder="Search Tenant ID or Name"
                             class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
                     </div>
                 </div>
@@ -402,11 +406,10 @@
                                 </svg>
                             </div>
                             <h1 class="mt-3 text-lg text-gray-800 dark:text-white">No Tenant found</h1>
-                            <p class="mt-2 text-gray-500 dark:text-gray-400">Your search “Tenant ID” did not match
-                                any
-                                Tenant. Please try again or create add a new Tenant.</p>
+                            <p class="mt-2 text-gray-500 dark:text-gray-400">Your search "@{{ searchQuery }}" did not match
+                                any tenant. Please try again.</p>
                             <div class="flex items-center mt-4 sm:mx-auto gap-x-3">
-                                <button
+                                <button @click="clearSearch"
                                     class="w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
                                     Clear Search
                                 </button>
@@ -471,26 +474,25 @@
                                             </thead>
                                             <tbody
                                                 class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                                <tr>
+                                                <tr v-for="tenant in filteredTenants" :key="tenant.id">
                                                     <td
                                                         class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                         <div class="inline-flex items-center gap-x-3">
-
-                                                            <span>#3066</span>
+                                                            <span>@{{ tenant.tenant_id }}</span>
                                                         </div>
                                                     </td>
                                                     <td
                                                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        Jan 6, 2022
+                                                        @{{ tenant.lease_end }}
                                                     </td>
                                                     <td
                                                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        1
+                                                        @{{ tenant.room_number }}
                                                     </td>
                                                     <td
                                                         class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                         <div
-                                                            class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                                                            class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-gray-500 bg-gray-100/60 dark:bg-gray-800">
                                                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
                                                                 xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M10 3L4.5 8.5L2 6" stroke="currentColor"
@@ -498,7 +500,7 @@
                                                                     stroke-linejoin="round" />
                                                             </svg>
 
-                                                            <h2 class="text-sm font-normal">Paid</h2>
+                                                            <h2 class="text-sm font-normal">@{{ tenant.status }}</h2>
                                                         </div>
                                                     </td>
                                                     <td
@@ -507,21 +509,20 @@
                                                             <div>
                                                                 <h2
                                                                     class="text-sm font-medium text-gray-800 dark:text-white ">
-                                                                    Arthur Melo</h2>
+                                                                    @{{ tenant.tenant_name }}</h2>
                                                                 <p
                                                                     class="text-xs font-normal text-gray-600 dark:text-gray-400">
-                                                                    0923-0919-234
+                                                                    @{{ tenant.tenant_contact }}
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td
                                                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        Student Plan</td>
+                                                        @{{ tenant.subscriptions }}</td>
                                                     <td
                                                         class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                        Jan 7, 2023
+                                                        @{{ new Date().toLocaleDateString() }}
                                                     </td>
-
                                                 </tr>
 
 
@@ -558,9 +559,13 @@
                 isRegularInfoOpen: false,
                 isVIPInfoOpen: false,
                 isAddTenant: false,
-                isEmpty: false,
-                ShowTenants: true,
+                isEmpty: {{ $tenants->isEmpty() ? 'true' : 'false' }},
+                ShowTenants: {{ !$tenants->isEmpty() ? 'true' : 'false' }},
                 adminTitle: 'Archive',
+                tenants: @json($tenants),
+                filteredTenants: @json($tenants),
+                currentFilter: 'all',
+                searchQuery: '',
 
                 // Clock Data
                 time: {
@@ -646,6 +651,35 @@
                     month: 'long',
                     day: 'numeric'
                 });
+            },
+            filterTenants(filter) {
+                if (filter) {
+                    this.currentFilter = filter;
+                }
+
+                // First filter by subscription type
+                let result = this.tenants;
+                if (this.currentFilter !== 'all') {
+                    result = result.filter(tenant => tenant.subscriptions === this.currentFilter);
+                }
+
+                // Then filter by search query if it exists
+                if (this.searchQuery.trim() !== '') {
+                    const query = this.searchQuery.toLowerCase().trim();
+                    result = result.filter(tenant =>
+                        (tenant.tenant_id && tenant.tenant_id.toLowerCase().includes(query)) ||
+                        (tenant.tenant_name && tenant.tenant_name.toLowerCase().includes(query))
+                    );
+                }
+
+                this.filteredTenants = result;
+
+                // Update isEmpty based on filtered results
+                this.isEmpty = result.length === 0;
+            },
+            clearSearch() {
+                this.searchQuery = '';
+                this.filterTenants(this.currentFilter);
             }
         },
         mounted() {

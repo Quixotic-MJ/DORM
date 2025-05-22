@@ -165,7 +165,7 @@
                                 <h2 class="text-xl font-bold text-black">Student Plan</h2>
                                 <p class="mt-2 text-gray-600">Perfect for students looking for affordable accommodation</p>
                                 <p class="mt-4">
-                                    <strong class="text-4xl font-bold text-gray-900">$200</strong>
+                                    <strong class="text-4xl font-bold text-gray-900">${{ $settings['pricing']['student_plan'] }}</strong>
                                     <span class="text-lg font-medium text-gray-600">/day</span>
                                 </p>
                             </div>
@@ -236,7 +236,7 @@
                                 <h2 class="text-xl font-bold text-black">Regular Plan</h2>
                                 <p class="mt-2 text-gray-600">For those who want extra comfort and space</p>
                                 <p class="mt-4">
-                                    <strong class="text-4xl font-bold text-gray-900">$350</strong>
+                                    <strong class="text-4xl font-bold text-gray-900">${{ $settings['pricing']['regular_plan'] }}</strong>
                                     <span class="text-lg font-medium text-gray-600">/day</span>
                                 </p>
                             </div>
@@ -307,7 +307,7 @@
                                 <h2 class="text-xl font-bold text-black">VIP Plan</h2>
                                 <p class="mt-2 text-gray-600">For those who want extra comfort and space</p>
                                 <p class="mt-4">
-                                    <strong class="text-4xl font-bold text-gray-900">$200</strong>
+                                    <strong class="text-4xl font-bold text-gray-900">${{ $settings['pricing']['vip_plan'] }}</strong>
                                     <span class="text-lg font-medium text-gray-600">/day</span>
                                 </p>
                             </div>

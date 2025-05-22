@@ -375,10 +375,14 @@
                         </section>
 
                         <div class="flex justify-center">
+                            @if(!$hasPendingRequest)
                             <button type="submit" @click="toggledSendReq"
                                 class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-m font-medium text-center text-gray-900 bg-[#ffc329] rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800 hover:text-[#ffc329]">
                                 Cancel
                             </button>
+                            @else
+                            <p class="text-gray-500 dark:text-gray-400 mt-4">You have a pending request. Please wait for it to be processed.</p>
+                            @endif
                         </div>
 
                     </section>
@@ -386,22 +390,35 @@
 
                     <section v-if="requesting" class="bg-white dark:bg-gray-900">
                         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+                            @if(session('success'))
+                            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                                {{ session('success') }}
+                            </div>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // Toggle to confirmation view after successful submission
+                                    if (window.app) {
+                                        window.app.toggledSendReq();
+                                    }
+                                });
+                            </script>
+                            @endif
+                            @if(session('error'))
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                {{ session('error') }}
+                            </div>
+                            @endif
                             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Please fill up the form
                             </h2>
-                            <form action="#">
+                            <form action="{{ route('tenant.submit-request') }}" method="POST">
+                                @csrf
                                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
                                     <div class="w-full">
-
-                                        <p type="text" name="brand" id="brand"
+                                        <label for="room_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Number</label>
+                                        <select name="room_number" id="room_number"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Product brand" required="">Room no:</p>
-                                    </div>
-                                    <div class="w-full">
-
-                                        <select name="" id=""
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="$3999" required="">>
+                                            required>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -410,17 +427,25 @@
                                             <option value="6">6</option>
                                         </select>
                                     </div>
-                                    <div class="w-full">
 
-                                        <p type="text" name="brand" id="brand"
+                                    <div class="w-full">
+                                        <label for="issue_type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Issue Type</label>
+                                        <select name="issue_type" id="issue_type"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Product brand" required="">Urgency Level</p>
+                                            required>
+                                            <option value="plumbing">Plumbing</option>
+                                            <option value="electrical">Electrical</option>
+                                            <option value="appliance">Appliance</option>
+                                            <option value="structural">Structural</option>
+                                            <option value="other">Other</option>
+                                        </select>
                                     </div>
-                                    <div class="w-full">
 
-                                        <select name="" id=""
+                                    <div class="w-full">
+                                        <label for="priority" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgency Level</label>
+                                        <select name="priority" id="priority"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="$3999" required="">>
+                                            required>
                                             <option value="low">Low</option>
                                             <option value="medium">Medium</option>
                                             <option value="high">High</option>
@@ -428,19 +453,25 @@
                                         </select>
                                     </div>
 
+                                    <div class="w-full">
+                                        <label for="contact" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number</label>
+                                        <input type="text" name="contact" id="contact"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="Your contact number" required>
+                                    </div>
 
                                     <div class="sm:col-span-2">
                                         <label for="description"
                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Describe
                                             the Problem</label>
-                                        <textarea id="description" rows="8"
+                                        <textarea id="description" name="description" rows="8"
                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Your description here"></textarea>
+                                            placeholder="Your description here" required></textarea>
                                     </div>
                                 </div>
 
                                 <div class="flex justify-center">
-                                    <button type="submit" @click="toggledSendReq"
+                                    <button type="submit"
                                         class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-m font-medium text-center text-gray-900 bg-[#ffc329] rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800 hover:text-[#ffc329]">
                                         Send Request
                                     </button>
@@ -459,7 +490,7 @@
         <script>
             const { createApp } = Vue;
 
-            createApp({
+            window.app = createApp({
                 data() {
                     return {
                         // UI States
@@ -472,8 +503,8 @@
                         isAddTenant: false,
                         isEmpty: false,
                         ShowTenants: true,
-                        doneReq: false,
-                        requesting: true,
+                        doneReq: {{ $hasPendingRequest ? 'true' : 'false' }},
+                        requesting: {{ $hasPendingRequest ? 'false' : 'true' }},
                         adminTitle: 'Add Tenants',
 
                         // Clock Data
@@ -582,7 +613,10 @@
                 beforeUnmount() {
                     document.removeEventListener('click', this.handleClickOutside);
                 }
-            }).mount('#app');
+            });
+
+            // Mount the app and store the instance
+            window.app = window.app.mount('#app');
         </script>
 
         <style>

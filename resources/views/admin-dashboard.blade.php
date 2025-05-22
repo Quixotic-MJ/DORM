@@ -323,7 +323,7 @@
                                 class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Edit Profile
                             </button>
-                            <a href="landing_page1.html"
+                            <a href="{{ url('/') }}"
                                 class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                 Log Out
                             </a>
@@ -425,22 +425,22 @@
                 <div class="bg-gray-800 p-4 rounded-lg text-center">
                     <div class="text-orange-400 text-2xl">👨‍👩‍👧‍👦</div>
                     <p class="font-normal">Total Tenants</p>
-                    <p class="text-lg font-semibold">6389</p>
+                    <p class="text-lg font-semibold">{{ $totalTenants }}</p>
                 </div>
                 <div class="bg-gray-800 p-4 rounded-lg text-center">
                     <div class="text-green-400 text-2xl">💰</div>
                     <p class="font-normal">Total balance</p>
-                    <p class="text-lg font-semibold">$46,760.89</p>
+                    <p class="text-lg font-semibold">${{ number_format($totalBalance, 2) }}</p>
                 </div>
                 <div class="bg-gray-800 p-4 rounded-lg text-center">
                     <div class="text-blue-400 text-2xl">🏠</div>
                     <p class="font-normal">Rooms Available</p>
-                    <p class="text-lg font-semibold">376</p>
+                    <p class="text-lg font-semibold">{{ $availableRooms }}</p>
                 </div>
                 <div class="bg-gray-800 p-4 rounded-lg text-center">
                     <div class="text-cyan-400 text-2xl">🛠️</div>
                     <p class="font-normal">Pending Request</p>
-                    <p class="text-lg font-semibold">35</p>
+                    <p class="text-lg font-semibold">{{ $pendingRequests }}</p>
                 </div>
             </div>
 
@@ -495,19 +495,19 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                        @forelse($tenants as $tenant)
                                         <tr>
                                             <td
                                                 class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div class="inline-flex items-center gap-x-3">
-
-
-                                                    <span>#3065</span>
+                                                    <span>#{{ $tenant->tenant_id }}</span>
                                                 </div>
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                $600.58</td>
+                                                ${{ number_format($tenant->due_amount, 2) }}</td>
                                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                @if($tenant->status == 'Paid')
                                                 <div
                                                     class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
                                                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
@@ -516,39 +516,9 @@
                                                             stroke-width="1.5" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                     </svg>
-
                                                     <h2 class="text-sm font-normal">Paid</h2>
                                                 </div>
-                                            </td>
-                                            <td
-                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                1
-                                            </td>
-
-                                            <td class="px-4 py-4 text-sm dark:text-gray-300 ">
-                                                Student Plan
-                                            </td>
-                                            <td class="px-4 py-4 text-sm dark:text-gray-300 ">
-                                                1/6
-                                            </td>
-                                            <td class="px-4 py-4 text-sm dark:text-gray-300 ">
-                                                2023-06-30
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td
-                                                class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                                <div class="inline-flex items-center gap-x-3">
-
-
-                                                    <span>#3066</span>
-                                                </div>
-                                            </td>
-                                            <td
-                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                Jan 5, 2022</td>
-                                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                @else
                                                 <div
                                                     class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
                                                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
@@ -557,27 +527,31 @@
                                                             stroke-width="1.5" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                     </svg>
-
                                                     <h2 class="text-sm font-normal">Overdued</h2>
                                                 </div>
+                                                @endif
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                2
-                                            </td>
-
-                                            <td class="px-4 py-4 text-sm dark:text-gray-300 ">
-                                                Regular Plan
+                                                {{ $tenant->room_number }}
                                             </td>
                                             <td class="px-4 py-4 text-sm dark:text-gray-300 ">
-                                                4/4
+                                                {{ $tenant->subscriptions }}
                                             </td>
                                             <td class="px-4 py-4 text-sm dark:text-gray-300 ">
-                                                2023-06-30
+                                                {{ $tenant->total_occupants }}/{{ $tenant->total_occupants }}
+                                            </td>
+                                            <td class="px-4 py-4 text-sm dark:text-gray-300 ">
+                                                {{ $tenant->lease_end }}
                                             </td>
                                         </tr>
-
-
+                                        @empty
+                                        <tr>
+                                            <td colspan="7" class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300">
+                                                No tenants found
+                                            </td>
+                                        </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
