@@ -151,12 +151,6 @@
                     </div>
 
 
-
-
-                    <button @click="toggleNotificationModal" class="p-2 text-white rounded-full">
-                        🔔
-                    </button>
-
                     <div class="relative inline-block">
                         <!-- Dropdown toggle button -->
                         <button @click="toggleDropdown"
@@ -170,16 +164,19 @@
                                 class="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
                                 <button @click="toggleProfileModal"
                                     class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Edit Profile
+                                    Change Password
                                 </button>
-                                <a href="{{url('/')}}"
-                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Log Out
-                                </a>
+                                <form method="POST" action="{{ route('logout') }}" class="m-0 p-0">
+                                    @csrf
+                                    <button type="submit"
+                                        class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                        Log Out
+                                    </button>
+                                </form>
                             </div>
                         </transition>
 
-                        <!-- Profile Modal -->
+                        <!-- Password Change Modal -->
                         <section v-if="isProfileModalOpen"
                             class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4" role="dialog"
                             aria-modal="true" aria-labelledby="modalTitle">
@@ -187,7 +184,7 @@
                                 <div class="flex items-start justify-between">
                                     <h2 id="modalTitle"
                                         class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                                        Profile
+                                        Change Password
                                     </h2>
                                     <button type="button" @click="toggleProfileModal"
                                         class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
@@ -201,67 +198,62 @@
                                 </div>
 
                                 <div class="mt-4 space-y-6">
-                                    <!-- Profile Content -->
-                                    <form @submit.prevent="handleDone">
-                                        <div
-                                            class="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full bg-[url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?...')] bg-cover bg-center bg-no-repeat">
+                                    <!-- Password Change Form -->
+                                    @if(session('success'))
+                                    <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                                        {{ session('success') }}
+                                    </div>
+                                    @endif
+                                    @if(session('error'))
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        {{ session('error') }}
+                                    </div>
+                                    @endif
+
+                                    <form action="{{ route('tenant.change-password') }}" method="POST">
+                                        @csrf
+
+                                        <!-- Current Password -->
+                                        <div class="mb-6">
+                                            <label for="current_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Password</label>
+                                            <input type="password" id="current_password" name="current_password"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                            @error('current_password')
+                                                <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                                            @enderror
                                         </div>
 
-                                        <a href="#">
-                                            <h2
-                                                class="text-center mt-1 font-semibold dark:text-gray-300 hover:underline">
-                                                Upload Profile
-                                            </h2>
-                                        </a>
-
-
-                                        <!-- Name Inputs -->
-                                        <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
-                                            <div class="w-full mb-4 mt-6">
-                                                <label class="mb-2 dark:text-gray-300">Janna</label>
-                                                <input type="text"
-                                                    class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                                    placeholder="First Name">
-                                            </div>
-                                            <div class="w-full mb-4 lg:mt-6">
-                                                <label class="dark:text-gray-300">Santos</label>
-                                                <input type="text"
-                                                    class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                                    placeholder="Last Name">
-                                            </div>
+                                        <!-- New Password -->
+                                        <div class="mb-6">
+                                            <label for="new_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+                                            <input type="password" id="new_password" name="new_password"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                            @error('new_password')
+                                                <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                                            @enderror
                                         </div>
 
-                                        <!-- Sex and Date of Birth -->
-                                        <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
-                                            <div class="w-full">
-                                                <h3 class="dark:text-gray-300 mb-2">Gender</h3>
-                                                <select
-                                                    class="w-48 h-10 text-gray-200 border-2 rounded-lg px-2 py-1 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
-                                                    <option disabled selected hidden value="">Select Gender</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-                                            </div>
-                                            <div class="w-full">
-                                                <h3 class="dark:text-gray-300 mb-2">Contact</h3>
-                                                <input type="text" placeholder="XXXX-XXX-XXX"
-                                                    class="text-grey p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
-                                            </div>
+                                        <!-- Confirm New Password -->
+                                        <div class="mb-6">
+                                            <label for="new_password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm New Password</label>
+                                            <input type="password" id="new_password_confirmation" name="new_password_confirmation"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
                                         </div>
 
                                         <!-- Submit -->
-                                        <div class="flex flex-row space-x-16 items-center justify-center mt-12">
-                                            <div
-                                                class="w-48 h-8 rounded bg-[#ffc329] mt-4 text-gray-800 text-lg font-semibold flex items-center justify-center transition-colors duration-300 hover:bg-gray-700 hover:text-[#ffc329]">
-                                                <button type="submit">Cancel</button>
-                                            </div>
-                                            <div
-                                                class="w-48 h-8 rounded bg-[#ffc329] mt-4 text-gray-800   text-lg font-semibold flex items-center justify-center transition-colors duration-300 hover:bg-gray-700 hover:text-[#ffc329]">
-                                                <button type="submit">Save</button>
-                                            </div>
+                                        <div class="flex flex-row space-x-4 items-center justify-center mt-6">
+                                            <button type="button" @click="toggleProfileModal"
+                                                class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                Cancel
+                                            </button>
+                                            <button type="submit"
+                                                class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-[#ffc329] rounded-lg hover:bg-gray-800 hover:text-[#ffc329] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                                                Change Password
+                                            </button>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
@@ -283,7 +275,7 @@
                             <ol
                                 class="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
                                 <li
-                                    class="flex md:w-full items-center text-green-400 dark:text-green-400 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+                                    class="flex md:w-full items-center {{ isset($maintenanceRequest) && $maintenanceRequest->status == 'Pending' ? 'text-green-400 dark:text-green-400' : 'text-gray-500 dark:text-gray-400' }} sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                                     <span
                                         class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                                         <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5" aria-hidden="true"
@@ -295,14 +287,14 @@
                                     </span>
                                 </li>
                                 <li
-                                    class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+                                    class="flex md:w-full items-center {{ isset($maintenanceRequest) && $maintenanceRequest->status == 'In Progress' ? 'text-[#ffc329] dark:text-[#ffc329]' : 'text-gray-500 dark:text-gray-400' }} after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                                     <span
-                                        class="flex text-[#ffc329] items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-[#ffc329] dark:after:text-[#ffc329]">
+                                        class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                                         <span class="me-2">2</span>
                                         In <span class="hidden sm:inline-flex sm:ms-2">Progress</span>
                                     </span>
                                 </li>
-                                <li class="flex items-center">
+                                <li class="flex items-center {{ isset($maintenanceRequest) && $maintenanceRequest->status == 'Completed' ? 'text-green-400 dark:text-green-400' : 'text-gray-500 dark:text-gray-400' }}">
                                     <span class="me-2">3</span>
                                     Done
                                 </li>
@@ -375,13 +367,16 @@
                         </section>
 
                         <div class="flex justify-center">
-                            @if(!$hasPendingRequest)
+                            @if(isset($maintenanceRequest) && $maintenanceRequest->status == 'Completed')
+                            <button type="submit" @click="toggledSendReq"
+                                class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-m font-medium text-center text-gray-900 bg-[#ffc329] rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800 hover:text-[#ffc329]">
+                                Request Again
+                            </button>
+                            @else
                             <button type="submit" @click="toggledSendReq"
                                 class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-m font-medium text-center text-gray-900 bg-[#ffc329] rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800 hover:text-[#ffc329]">
                                 Cancel
                             </button>
-                            @else
-                            <p class="text-gray-500 dark:text-gray-400 mt-4">You have a pending request. Please wait for it to be processed.</p>
                             @endif
                         </div>
 
@@ -394,14 +389,6 @@
                             <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
                                 {{ session('success') }}
                             </div>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    // Toggle to confirmation view after successful submission
-                                    if (window.app) {
-                                        window.app.toggledSendReq();
-                                    }
-                                });
-                            </script>
                             @endif
                             @if(session('error'))
                             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
@@ -410,7 +397,7 @@
                             @endif
                             <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Please fill up the form
                             </h2>
-                            <form action="{{ route('tenant.submit-request') }}" method="POST">
+                            <form action="{{ route('tenant.submit-request') }}" method="POST" id="maintenanceRequestForm">
                                 @csrf
                                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
@@ -471,7 +458,7 @@
                                 </div>
 
                                 <div class="flex justify-center">
-                                    <button type="submit"
+                                    <button type="button" @click="submitRequest"
                                         class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-m font-medium text-center text-gray-900 bg-[#ffc329] rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800 hover:text-[#ffc329]">
                                         Send Request
                                     </button>
@@ -555,6 +542,13 @@
                     toggledSendReq() {
                         this.requesting = !this.requesting;
                         this.doneReq = !this.doneReq;
+                    },
+                    submitRequest() {
+                        // First toggle to show the confirmation view
+                        this.toggledSendReq();
+
+                        // Then submit the form
+                        document.getElementById('maintenanceRequestForm').submit();
                     },
                     toggleNotificationModal() {
                         this.isNotificationModalOpen = !this.isNotificationModalOpen;

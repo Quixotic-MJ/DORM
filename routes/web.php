@@ -22,11 +22,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::post('/store-tenant', [AdminController::class, 'storeTenant'])->name('store-tenant');
     Route::post('/archive-tenant/{id}', [AdminController::class, 'archiveTenant'])->name('archive-tenant');
     Route::post('/extend-tenant/{id}', [AdminController::class, 'extendTenant'])->name('extend-tenant');
+    Route::post('/clear-tenant-data', [AdminController::class, 'clearTenantData'])->name('clear-tenant-data');
     Route::get('/archive', [AdminController::class, 'archive'])->name('archive');
     Route::get('/maintenance-requests', [AdminController::class, 'maintenanceRequests'])->name('maintenance-requests');
+    Route::post('/maintenance-requests/{id}/update-status', [AdminController::class, 'updateRequestStatus'])->name('update-request-status');
     Route::get('/manage-dorm', [AdminController::class, 'manageDorm'])->name('manage-dorm');
     Route::post('/update-dorm-settings', [AdminController::class, 'updateDormSettings'])->name('update-dorm-settings');
     Route::get('/payment-history', [AdminController::class, 'paymentHistory'])->name('payment-history');
+    Route::post('/record-payment', [AdminController::class, 'recordPayment'])->name('record-payment');
 });
 
 // Tenant Routes
@@ -35,6 +38,7 @@ Route::prefix('tenant')->name('tenant.')->middleware('auth:tenant')->group(funct
     Route::get('/dorm-rules', [TenantController::class, 'dormRules'])->name('dorm-rules');
     Route::get('/request', [TenantController::class, 'maintenanceRequest'])->name('request');
     Route::post('/submit-request', [TenantController::class, 'submitRequest'])->name('submit-request');
+    Route::post('/change-password', [TenantController::class, 'changePassword'])->name('change-password');
 });
 
 // Dashboard redirect based on user type

@@ -699,7 +699,7 @@
     createApp({
         data() {
             return {
-                currentSection: 'home',
+                currentSection: '{{ $currentSection ?? 'home' }}',
                 loginForm: {
                     username: '',
                     password: ''

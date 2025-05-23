@@ -78,7 +78,7 @@
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
                                     </path>
                                 </svg>
-                                <span class="whitespace-nowrap">Payment History</span>
+                                <span class="whitespace-nowrap">Payment</span>
                             </div>
                         </span>
                     </a>
@@ -241,7 +241,7 @@
                             class="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
                             <button @click="toggleProfileModal"
                                 class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                Edit Profile
+                                Edit admin account
                             </button>
                             <a href="{{ url('/') }}"
                                 class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -256,7 +256,7 @@
                         <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
                             <div class="flex items-start justify-between">
                                 <h2 id="modalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                                    Profile</h2>
+                                    Edit Admin Account</h2>
                                 <button type="button" @click="toggleProfileModal"
                                     class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
                                     aria-label="Close">
@@ -269,43 +269,34 @@
                             </div>
 
                             <form @submit.prevent="handleDone" class="mt-4 space-y-6">
-                                <div
-                                    class="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full bg-[url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?...')] bg-cover bg-center bg-no-repeat">
-                                </div>
-                                <a href="#"
-                                    class="block text-center mt-1 font-semibold dark:text-gray-300 hover:underline">Upload
-                                    Profile</a>
 
                                 <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
                                     <div class="w-full mb-4 mt-6">
-                                        <label class="mb-2 dark:text-gray-300">First Name</label>
+                                        <label class="mb-2 dark:text-gray-300">Username</label>
                                         <input type="text"
                                             class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                            placeholder="First Name">
+                                            placeholder="Enter username">
                                     </div>
                                     <div class="w-full mb-4 lg:mt-6">
-                                        <label class="dark:text-gray-300">Last Name</label>
-                                        <input type="text"
+                                        <label class="dark:text-gray-300">Current Password</label>
+                                        <input type="password"
                                             class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                            placeholder="Last Name">
+                                            placeholder="Current password">
                                     </div>
                                 </div>
 
                                 <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
                                     <div class="w-full">
-                                        <h3 class="dark:text-gray-300 mb-2">Gender</h3>
-                                        <select
-                                            class="w-48 h-10 text-gray-200 border-2 rounded-lg px-2 py-1 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
-                                            <option disabled selected hidden value="">Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <h3 class="dark:text-gray-300 mb-2">New Password</h3>
+                                        <input type="password"
+                                            class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                                            placeholder="New password">
                                     </div>
                                     <div class="w-full">
-                                        <h3 class="dark:text-gray-300 mb-2">Contact</h3>
-                                        <input type="text" placeholder="XXXX-XXX-XXX"
-                                            class="text-grey p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
+                                        <h3 class="dark:text-gray-300 mb-2">Confirm Password</h3>
+                                        <input type="password"
+                                            class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                                            placeholder="Confirm password">
                                     </div>
                                 </div>
 
@@ -335,7 +326,7 @@
                             <h2 class="text-lg font-medium text-gray-800 dark:text-white">Archive</h2>
 
                             <span
-                                class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-[#ffc329]">24
+                                class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-[#ffc329]">{{ count($tenants) }}
                                 Archived</span>
                         </div>
 
@@ -359,21 +350,6 @@
                             :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'all'}"
                             class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                             View all
-                        </button>
-                        <button @click="filterTenants('Student Plan')"
-                            :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Student Plan'}"
-                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Student Plan
-                        </button>
-                        <button @click="filterTenants('Regular Plan')"
-                            :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Regular Plan'}"
-                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Regular Plan
-                        </button>
-                        <button @click="filterTenants('Premium Plan')"
-                            :class="{'bg-gray-100 dark:bg-gray-800': currentFilter === 'Premium Plan'}"
-                            class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Premium Plan
                         </button>
                     </div>
 

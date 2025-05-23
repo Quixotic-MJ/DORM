@@ -146,113 +146,6 @@
 
 
 
-                    <button @click="toggleNotificationModal" class="p-2 text-white rounded-full">
-                        🔔
-                    </button>
-
-                    <!-- Notification Modal -->
-                    <div v-if="isNotificationModalOpen"
-                        class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4" role="dialog"
-                        aria-modal="true" aria-labelledby="modalTitle">
-                        <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
-                            <div class="flex items-start justify-between">
-                                <h2 id="modalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                                    Notification
-                                </h2>
-
-                                <button type="button" @click="toggleNotificationModal"
-                                    class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-                                    aria-label="Close">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <div class="mt-4 flex-col space-y-6 max-h-[70vh] overflow-y-auto scrollbar-hide">
-                                <!-- Limit height and enable scrolling -->
-                                <div class="max-w-4xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10,
-                                            2019</span>
-                                        <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                                            tabindex="0" role="button">Delete</a>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <a href="#"
-                                            class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-                                            tabindex="0" role="link">Staff</a>
-                                        <p class="mt-2 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit, amet
-                                            consectetur
-                                            adipisicing elit. Tempora expedita dicta totam aspernatur doloremque.
-                                            Excepturi
-                                            iste
-                                            iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in
-                                            modi
-                                            ratione
-                                            libero!</p>
-                                    </div>
-                                </div>
-
-                                <div class="max-w-4xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10,
-                                            2019</span>
-                                        <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                                            tabindex="0" role="button">Delete</a>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <a href="#"
-                                            class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-                                            tabindex="0" role="link">Promo</a>
-                                        <p class="mt-2 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit, amet
-                                            consectetur
-                                            adipisicing elit. Tempora expedita dicta totam aspernatur doloremque.
-                                            Excepturi
-                                            iste
-                                            iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in
-                                            modi
-                                            ratione
-                                            libero!</p>
-                                    </div>
-                                </div>
-
-                                <div class="max-w-4xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10,
-                                            2019</span>
-                                        <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                                            tabindex="0" role="button">Delete</a>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <a href="#"
-                                            class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-                                            tabindex="0" role="link">Promo</a>
-                                        <p class="mt-2 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit, amet
-                                            consectetur
-                                            adipisicing elit. Tempora expedita dicta totam aspernatur doloremque.
-                                            Excepturi
-                                            iste
-                                            iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in
-                                            modi
-                                            ratione
-                                            libero!</p>
-                                    </div>
-                                </div>
-
-
-                                <!-- Repeat the above block for other content -->
-
-                            </div>
-                        </div>
-                    </div>
-
-
                     <div class="relative inline-block">
                         <!-- Dropdown toggle button -->
                         <button @click="toggleDropdown"
@@ -266,16 +159,19 @@
                                 class="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
                                 <button @click="toggleProfileModal"
                                     class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Edit Profile
+                                    Change Password
                                 </button>
-                                <a href="landing_page1.html"
-                                    class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Log Out
-                                </a>
+                                <form method="POST" action="{{ route('logout') }}" class="m-0 p-0">
+                                    @csrf
+                                    <button type="submit"
+                                        class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                        Log Out
+                                    </button>
+                                </form>
                             </div>
                         </transition>
 
-                        <!-- Profile Modal -->
+                        <!-- Password Change Modal -->
                         <section v-if="isProfileModalOpen"
                             class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4" role="dialog"
                             aria-modal="true" aria-labelledby="modalTitle">
@@ -283,7 +179,7 @@
                                 <div class="flex items-start justify-between">
                                     <h2 id="modalTitle"
                                         class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                                        Profile
+                                        Change Password
                                     </h2>
                                     <button type="button" @click="toggleProfileModal"
                                         class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
@@ -297,67 +193,62 @@
                                 </div>
 
                                 <div class="mt-4 space-y-6">
-                                    <!-- Profile Content -->
-                                    <form @submit.prevent="handleDone">
-                                        <div
-                                            class="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full bg-[url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?...')] bg-cover bg-center bg-no-repeat">
+                                    <!-- Password Change Form -->
+                                    @if(session('success'))
+                                    <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                                        {{ session('success') }}
+                                    </div>
+                                    @endif
+                                    @if(session('error'))
+                                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        {{ session('error') }}
+                                    </div>
+                                    @endif
+
+                                    <form action="{{ route('tenant.change-password') }}" method="POST">
+                                        @csrf
+
+                                        <!-- Current Password -->
+                                        <div class="mb-6">
+                                            <label for="current_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Password</label>
+                                            <input type="password" id="current_password" name="current_password"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                            @error('current_password')
+                                                <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                                            @enderror
                                         </div>
 
-                                        <a href="#">
-                                            <h2
-                                                class="text-center mt-1 font-semibold dark:text-gray-300 hover:underline">
-                                                Upload Profile
-                                            </h2>
-                                        </a>
-
-
-                                        <!-- Name Inputs -->
-                                        <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
-                                            <div class="w-full mb-4 mt-6">
-                                                <label class="mb-2 dark:text-gray-300">Janna</label>
-                                                <input type="text"
-                                                    class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                                    placeholder="First Name">
-                                            </div>
-                                            <div class="w-full mb-4 lg:mt-6">
-                                                <label class="dark:text-gray-300">Santos</label>
-                                                <input type="text"
-                                                    class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                                    placeholder="Last Name">
-                                            </div>
+                                        <!-- New Password -->
+                                        <div class="mb-6">
+                                            <label for="new_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+                                            <input type="password" id="new_password" name="new_password"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
+                                            @error('new_password')
+                                                <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                                            @enderror
                                         </div>
 
-                                        <!-- Sex and Date of Birth -->
-                                        <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
-                                            <div class="w-full">
-                                                <h3 class="dark:text-gray-300 mb-2">Gender</h3>
-                                                <select
-                                                    class="w-48 h-10 text-gray-200 border-2 rounded-lg px-2 py-1 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
-                                                    <option disabled selected hidden value="">Select Gender</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                    <option value="other">Other</option>
-                                                </select>
-                                            </div>
-                                            <div class="w-full">
-                                                <h3 class="dark:text-gray-300 mb-2">Contact</h3>
-                                                <input type="text" placeholder="XXXX-XXX-XXX"
-                                                    class="text-grey p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
-                                            </div>
+                                        <!-- Confirm New Password -->
+                                        <div class="mb-6">
+                                            <label for="new_password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm New Password</label>
+                                            <input type="password" id="new_password_confirmation" name="new_password_confirmation"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                required>
                                         </div>
 
                                         <!-- Submit -->
-                                        <div class="flex flex-row space-x-16 items-center justify-center mt-12">
-                                            <div
-                                                class="w-48 h-8 rounded bg-[#ffc329] mt-4 text-gray-800 text-lg font-semibold flex items-center justify-center transition-colors duration-300 hover:bg-gray-700 hover:text-[#ffc329]">
-                                                <button type="submit">Cancel</button>
-                                            </div>
-                                            <div
-                                                class="w-48 h-8 rounded bg-[#ffc329] mt-4 text-gray-800   text-lg font-semibold flex items-center justify-center transition-colors duration-300 hover:bg-gray-700 hover:text-[#ffc329]">
-                                                <button type="submit">Save</button>
-                                            </div>
+                                        <div class="flex flex-row space-x-4 items-center justify-center mt-6">
+                                            <button type="button" @click="toggleProfileModal"
+                                                class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                Cancel
+                                            </button>
+                                            <button type="submit"
+                                                class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-[#ffc329] rounded-lg hover:bg-gray-800 hover:text-[#ffc329] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                                                Change Password
+                                            </button>
                                         </div>
-
                                     </form>
                                 </div>
                             </div>
@@ -368,7 +259,7 @@
 
             <section>
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-4 gap-4 my-6 text-white">
+                <div class="grid grid-cols-3 gap-3 my-6 text-white">
                     <div class="bg-gray-800 p-4 rounded-lg text-center">
                         <div class="text-orange-400 text-2xl">🛠️</div>
                         <p class="font-normal">Request Status</p>
@@ -378,11 +269,6 @@
                         <div class="text-green-400 text-2xl">📅</div>
                         <p class="font-normal">Upcoming Rent Due</p>
                         <p class="text-lg font-semibold">{{ $nextRentDue }}</p>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg text-center">
-                        <div class="text-blue-400 text-2xl">📢</div>
-                        <p class="font-normal">Recent Notifications</p>
-                        <p class="text-lg font-semibold">{{ $recentNotifications }}</p>
                     </div>
                     <div class="bg-gray-800 p-4 rounded-lg text-center">
                         <div class="text-cyan-400 text-2xl">💵</div>
@@ -423,26 +309,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <form action="{{ route('tenant.homepage') }}" method="GET">
-                                <label for="search_date" class="sr-only">Search by date</label>
-                                <div class="relative">
-                                    <div
-                                        class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
-                                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                    </div>
-                                    <input type="date" id="search_date" name="search_date" value="{{ $searchDate ?? '' }}"
-                                        class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Search by date">
-                                    <button type="submit" class="absolute right-2.5 bottom-2.5 text-sm font-medium text-blue-700 hover:text-blue-800 focus:outline-none">
-                                        Search
-                                    </button>
-                                </div>
-                            </form>
+
                         </div>
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead
@@ -463,6 +330,63 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    // Get the tenant
+                                    $tenant = Auth::guard('tenant')->user();
+
+                                    // Get the dorm settings to calculate the due amount
+                                    $settings = json_decode(\Illuminate\Support\Facades\Storage::get('dorm_settings.json'), true) ?? [
+                                        'pricing' => [
+                                            'student_plan' => 200,
+                                            'regular_plan' => 350,
+                                            'vip_plan' => 500
+                                        ]
+                                    ];
+
+                                    // Calculate due amount based on subscription and number of occupants
+                                    $subscriptionPrice = 0;
+                                    switch ($tenant->subscriptions) {
+                                        case 'Student Plan':
+                                            $subscriptionPrice = $settings['pricing']['student_plan'];
+                                            break;
+                                        case 'Regular Plan':
+                                            $subscriptionPrice = $settings['pricing']['regular_plan'];
+                                            break;
+                                        case 'Premium Plan':
+                                            $subscriptionPrice = $settings['pricing']['vip_plan'];
+                                            break;
+                                    }
+
+                                    $dueAmount = $subscriptionPrice * $tenant->total_occupants;
+                                    $totalPaid = $tenant->total_paid ?? 0;
+
+                                    // Determine payment status
+                                    $paymentStatus = 'unpaid';
+                                    if ($totalPaid > 0) {
+                                        $paymentStatus = 'partially_paid';
+                                        if ($totalPaid >= $dueAmount) {
+                                            $paymentStatus = 'fully_paid';
+                                        }
+                                    }
+                                @endphp
+
+                                <!-- Display overall payment status -->
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ now()->format('M d, Y') }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ ucfirst(str_replace('_', ' ', $paymentStatus)) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        ${{ number_format($dueAmount, 2) }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        ${{ number_format($totalPaid, 2) }}
+                                    </td>
+                                </tr>
+
+                                <!-- Display individual payment records -->
                                 @if(count($payments) > 0)
                                     @foreach($payments as $payment)
                                     <tr
@@ -472,7 +396,7 @@
                                             {{ $payment->payment_date->format('M d, Y') }}
                                         </th>
                                         <td class="px-6 py-4">
-                                            {{ ucfirst($payment->status) }}
+                                            {{ ucfirst(str_replace('_', ' ', $payment->status)) }}
                                         </td>
                                         <td class="px-6 py-4">
                                             ${{ number_format($payment->due_amount, 2) }}
@@ -482,7 +406,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                @else
+                                @elseif($paymentStatus == 'unpaid')
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <td colspan="4" class="px-6 py-4 text-center">
                                             No payment records found

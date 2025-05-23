@@ -76,7 +76,7 @@
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
                                     </path>
                                 </svg>
-                                <span>Payment History</span>
+                                <span>Payment</span>
                             </div>
                         </span>
                     </a>
@@ -180,53 +180,6 @@
                     </div>
                 </div>
 
-                <button @click="toggleNotificationModal" class="p-2 text-white rounded-full">
-                    🔔
-                </button>
-
-                <!-- Notification Modal -->
-                <div v-if="isNotificationModalOpen" class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4"
-                    role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-                    <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
-                        <div class="flex items-start justify-between">
-                            <h2 id="modalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                                Notification
-                            </h2>
-
-                            <button type="button" @click="toggleNotificationModal"
-                                class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-                                aria-label="Close">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        <div class="mt-4 flex-col space-y-6 max-h-[70vh] overflow-y-auto scrollbar-hide">
-                            <!-- Notification items -->
-                            <div v-for="n in 3" :key="n"
-                                class="max-w-4xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10,
-                                        2019</span>
-                                    <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                                        tabindex="0" role="button">Delete</a>
-                                </div>
-
-                                <div class="mt-2">
-                                    <a href="#"
-                                        class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-                                        tabindex="0" role="link">Notice</a>
-                                    <p class="mt-2 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit, amet
-                                        consectetur adipisicing elit. Tempora expedita dicta totam aspernatur
-                                        doloremque.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="relative inline-block">
                     <!-- Profile dropdown -->
@@ -241,7 +194,7 @@
                             class="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
                             <button @click="toggleProfileModal"
                                 class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                Edit Profile
+                                Edit admin account
                             </button>
                             <a href="{{ url('/') }}"
                                 class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -278,34 +231,31 @@
 
                                 <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
                                     <div class="w-full mb-4 mt-6">
-                                        <label class="mb-2 dark:text-gray-300">First Name</label>
+                                        <label class="mb-2 dark:text-gray-300">Username</label>
                                         <input type="text"
                                             class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                            placeholder="First Name">
+                                            placeholder="Enter username">
                                     </div>
                                     <div class="w-full mb-4 lg:mt-6">
-                                        <label class="dark:text-gray-300">Last Name</label>
-                                        <input type="text"
+                                        <label class="dark:text-gray-300">Current Password</label>
+                                        <input type="password"
                                             class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                            placeholder="Last Name">
+                                            placeholder="Current password">
                                     </div>
                                 </div>
 
                                 <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
                                     <div class="w-full">
-                                        <h3 class="dark:text-gray-300 mb-2">Gender</h3>
-                                        <select
-                                            class="w-48 h-10 text-gray-200 border-2 rounded-lg px-2 py-1 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
-                                            <option disabled selected hidden value="">Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <h3 class="dark:text-gray-300 mb-2">New Password</h3>
+                                        <input type="password"
+                                            class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                                            placeholder="New password">
                                     </div>
                                     <div class="w-full">
-                                        <h3 class="dark:text-gray-300 mb-2">Contact</h3>
-                                        <input type="text" placeholder="XXXX-XXX-XXX"
-                                            class="text-grey p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
+                                        <h3 class="dark:text-gray-300 mb-2">Confirm Password</h3>
+                                        <input type="password"
+                                            class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                                            placeholder="Confirm password">
                                     </div>
                                 </div>
 
@@ -360,46 +310,97 @@
                                             class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             <div class="flex items-center gap-x-3">
                                                 <button class="flex items-center gap-x-2">
-                                                    <span>Tenant ID</span>
+                                                    <span>Payment Date</span>
                                                 </button>
                                             </div>
                                         </th>
                                         <th scope="col"
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                            Total paid</th>
+                                            Tenant ID</th>
                                         <th scope="col"
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                            Due amount </th>
+                                            Tenant Name</th>
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            Amount Paid</th>
+                                        <th scope="col"
+                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            Due Amount</th>
                                         <th scope="col"
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             Status</th>
                                         <th scope="col"
                                             class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                            Room Type</th>
-                                        <th scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                            Check-out</th>
+                                            Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                     @forelse($tenants as $tenant)
+                                    @php
+                                        // Get the dorm settings to calculate the due amount
+                                        $settings = json_decode(\Illuminate\Support\Facades\Storage::get('dorm_settings.json'), true) ?? [
+                                            'pricing' => [
+                                                'student_plan' => 200,
+                                                'regular_plan' => 350,
+                                                'vip_plan' => 500
+                                            ]
+                                        ];
+
+                                        // Calculate due amount based on subscription and number of occupants
+                                        $subscriptionPrice = 0;
+                                        switch ($tenant->subscriptions) {
+                                            case 'Student Plan':
+                                                $subscriptionPrice = $settings['pricing']['student_plan'];
+                                                break;
+                                            case 'Regular Plan':
+                                                $subscriptionPrice = $settings['pricing']['regular_plan'];
+                                                break;
+                                            case 'Premium Plan':
+                                                $subscriptionPrice = $settings['pricing']['vip_plan'];
+                                                break;
+                                        }
+
+                                        $dueAmount = $subscriptionPrice * $tenant->total_occupants;
+                                        $totalPaid = $tenant->total_paid ?? 0;
+
+                                        // Determine payment status
+                                        $paymentStatus = 'unpaid';
+                                        if ($totalPaid > 0) {
+                                            $paymentStatus = 'partially_paid';
+                                            if ($totalPaid >= $dueAmount) {
+                                                $paymentStatus = 'fully_paid';
+                                            }
+                                        }
+
+                                        // Get the latest payment date
+                                        $latestPayment = $tenant->payments->sortByDesc('payment_date')->first();
+                                        $paymentDate = $latestPayment ? $latestPayment->payment_date : now();
+                                    @endphp
                                     <tr>
                                         <td
                                             class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                             <div class="inline-flex items-center gap-x-3">
-                                                <span>#{{ $tenant->tenant_id }}</span>
+                                                <span>{{ $paymentDate->format('M d, Y') }}</span>
                                             </div>
                                         </td>
                                         <td
                                             class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            ${{ number_format($tenant->total_paid, 2) }}
+                                            #{{ $tenant->tenant_id }}
                                         </td>
                                         <td
                                             class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            ${{ number_format($tenant->due_amount, 2) }}
+                                            {{ $tenant->tenant_name }}
+                                        </td>
+                                        <td
+                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            ${{ number_format($totalPaid, 2) }}
+                                        </td>
+                                        <td
+                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                            ${{ number_format($dueAmount, 2) }}
                                         </td>
                                         <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            @if($tenant->status == 'Paid')
+                                            @if($paymentStatus == 'fully_paid')
                                             <div
                                                 class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
                                                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
@@ -408,7 +409,18 @@
                                                         stroke-width="1.5" stroke-linecap="round"
                                                         stroke-linejoin="round" />
                                                 </svg>
-                                                <h2 class="text-sm font-normal">Paid</h2>
+                                                <h2 class="text-sm font-normal">Fully Paid</h2>
+                                            </div>
+                                            @elseif($paymentStatus == 'partially_paid')
+                                            <div
+                                                class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-yellow-500 bg-yellow-100/60 dark:bg-gray-800">
+                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M6 2v6M6 10v.01" stroke="currentColor"
+                                                        stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                                <h2 class="text-sm font-normal">Partially Paid</h2>
                                             </div>
                                             @else
                                             <div
@@ -419,23 +431,21 @@
                                                         stroke-width="1.5" stroke-linecap="round"
                                                         stroke-linejoin="round" />
                                                 </svg>
-                                                <h2 class="text-sm font-normal">Overdue</h2>
+                                                <h2 class="text-sm font-normal">Unpaid</h2>
                                             </div>
                                             @endif
                                         </td>
-                                        <td
-                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ $tenant->subscriptions }}
-                                        </td>
-                                        <td
-                                            class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            {{ $tenant->lease_end }}
+                                        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                            <button @click="openPaymentModal('{{ $tenant->id }}')"
+                                                class="px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                                Record Payment
+                                            </button>
                                         </td>
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="6" class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300">
-                                            No payment history found
+                                        <td colspan="7" class="px-4 py-4 text-sm text-center text-gray-500 dark:text-gray-300">
+                                            No tenants found
                                         </td>
                                     </tr>
                                     @endforelse
@@ -447,6 +457,80 @@
             </div>
         </section>
     </main>
+
+    <!-- Payment Modal -->
+    <div v-if="isPaymentModalOpen" class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4"
+        role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle">
+        <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
+            <div class="flex items-start justify-between">
+                <h2 id="paymentModalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
+                    Record Payment
+                </h2>
+                <button type="button" @click="closePaymentModal"
+                    class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                    aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="mt-4 space-y-6">
+                <!-- Payment Form -->
+                @if(session('success'))
+                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                    {{ session('success') }}
+                </div>
+                @endif
+                @if(session('error'))
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    {{ session('error') }}
+                </div>
+                @endif
+
+                <form action="{{ route('admin.record-payment') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="tenant_id" :value="selectedTenantId">
+
+                    <!-- Payment Amount -->
+                    <div class="mb-6">
+                        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Amount</label>
+                        <input type="number" id="amount" name="amount" step="0.01" min="0"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            required>
+                        @error('amount')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Payment Date -->
+                    <div class="mb-6">
+                        <label for="payment_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Date</label>
+                        <input type="date" id="payment_date" name="payment_date"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            :value="currentDate" required>
+                        @error('payment_date')
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="flex flex-row space-x-4 items-center justify-center mt-6">
+                        <button type="button" @click="closePaymentModal"
+                            class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                            class="px-5 py-2.5 text-sm font-medium text-gray-900 bg-[#ffc329] rounded-lg hover:bg-gray-800 hover:text-[#ffc329] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                            Record Payment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     const { createApp } = Vue;
@@ -462,6 +546,9 @@
                 isRegularInfoOpen: false,
                 isVIPInfoOpen: false,
                 isAddStaff: false,
+                isPaymentModalOpen: false,
+                selectedTenantId: null,
+                currentDate: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
                 currentSection: 'adminDashboard',
                 adminTitle: 'Payment History',
 
@@ -512,6 +599,14 @@
             toggleProfileModal() {
                 this.isProfileModalOpen = !this.isProfileModalOpen;
                 this.isOpen = false;
+            },
+            openPaymentModal(tenantId) {
+                this.selectedTenantId = tenantId;
+                this.isPaymentModalOpen = true;
+            },
+            closePaymentModal() {
+                this.isPaymentModalOpen = false;
+                this.selectedTenantId = null;
             },
             toggleStudentinfo() {
                 this.isStudentInfoOpen = true;

@@ -80,7 +80,7 @@
                                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
                                         </path>
                                     </svg>
-                                    <span class="whitespace-nowrap">Payment History</span>
+                                    <span class="whitespace-nowrap">Payment</span>
                                 </div>
                             </span>
                         </a>
@@ -184,56 +184,7 @@
                         </div>
                     </div>
 
-                    <button @click="toggleNotificationModal" class="p-2 text-white rounded-full">
-                        🔔
-                    </button>
 
-
-
-                    <!-- Notification Modal -->
-                    <div v-if="isNotificationModalOpen"
-                        class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4" role="dialog"
-                        aria-modal="true" aria-labelledby="modalTitle">
-                        <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
-                            <div class="flex items-start justify-between">
-                                <h2 id="modalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                                    Notification
-                                </h2>
-
-                                <button type="button" @click="toggleNotificationModal"
-                                    class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-                                    aria-label="Close">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <div class="mt-4 flex-col space-y-6 max-h-[70vh] overflow-y-auto scrollbar-hide">
-                                <!-- Notification items -->
-                                <div v-for="n in 3" :key="n"
-                                    class="max-w-4xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10,
-                                            2019</span>
-                                        <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                                            tabindex="0" role="button">Delete</a>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <a href="#"
-                                            class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-                                            tabindex="0" role="link">Notice</a>
-                                        <p class="mt-2 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit, amet
-                                            consectetur adipisicing elit. Tempora expedita dicta totam aspernatur
-                                            doloremque.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="relative inline-block">
                         <!-- Profile dropdown -->
@@ -248,7 +199,7 @@
                                 class="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
                                 <button @click="toggleProfileModal"
                                     class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Edit Profile
+                                    Edit admin account
                                 </button>
                                 <a href="{{ url('/') }}"
                                     class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -264,7 +215,7 @@
                             <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
                                 <div class="flex items-start justify-between">
                                     <h2 id="modalTitle"
-                                        class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">Profile</h2>
+                                        class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">Edit Admin Account</h2>
                                     <button type="button" @click="toggleProfileModal"
                                         class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
                                         aria-label="Close">
@@ -277,43 +228,34 @@
                                 </div>
 
                                 <form @submit.prevent="handleDone" class="mt-4 space-y-6">
-                                    <div
-                                        class="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full bg-[url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?...')] bg-cover bg-center bg-no-repeat">
-                                    </div>
-                                    <a href="#"
-                                        class="block text-center mt-1 font-semibold dark:text-gray-300 hover:underline">Upload
-                                        Profile</a>
 
                                     <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
                                         <div class="w-full mb-4 mt-6">
-                                            <label class="mb-2 dark:text-gray-300">First Name</label>
+                                            <label class="mb-2 dark:text-gray-300">Username</label>
                                             <input type="text"
                                                 class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                                placeholder="First Name">
+                                                placeholder="Enter username">
                                         </div>
                                         <div class="w-full mb-4 lg:mt-6">
-                                            <label class="dark:text-gray-300">Last Name</label>
-                                            <input type="text"
+                                            <label class="dark:text-gray-300">Current Password</label>
+                                            <input type="password"
                                                 class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                                placeholder="Last Name">
+                                                placeholder="Current password">
                                         </div>
                                     </div>
 
                                     <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
                                         <div class="w-full">
-                                            <h3 class="dark:text-gray-300 mb-2">Gender</h3>
-                                            <select
-                                                class="w-48 h-10 text-gray-200 border-2 rounded-lg px-2 py-1 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
-                                                <option disabled selected hidden value="">Select Gender</option>
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
-                                                <option value="other">Other</option>
-                                            </select>
+                                            <h3 class="dark:text-gray-300 mb-2">New Password</h3>
+                                            <input type="password"
+                                                class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                                                placeholder="New password">
                                         </div>
                                         <div class="w-full">
-                                            <h3 class="dark:text-gray-300 mb-2">Contact</h3>
-                                            <input type="text" placeholder="XXXX-XXX-XXX"
-                                                class="text-grey p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
+                                            <h3 class="dark:text-gray-300 mb-2">Confirm Password</h3>
+                                            <input type="password"
+                                                class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                                                placeholder="Confirm password">
                                         </div>
                                     </div>
 
@@ -343,7 +285,7 @@
                                 <h2 class="text-lg font-medium text-gray-800 dark:text-white">Tenants</h2>
 
                                 <span
-                                    class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-[#ffc329]">24
+                                    class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-[#ffc329]">{{ count($tenants) }}
                                     Tenants</span>
                             </div>
 
@@ -351,7 +293,18 @@
                         </div>
 
                         <div class="flex items-center mt-4 gap-x-3">
-
+                            <form action="{{ route('admin.clear-tenant-data') }}" method="POST" onsubmit="return confirm('Are you sure you want to clear all tenant data? This action cannot be undone.');">
+                                @csrf
+                                <button type="submit"
+                                    class="flex items-center justify-center px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-red-600 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                    <span>Clear Tenant Data</span>
+                                </button>
+                            </form>
 
                             <button @click="toggledAddTenant"
                                 class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-gray-900 transition-colors duration-200 bg-[#ffc329] rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-gray-800 dark:hover:text-[#ffc329] dark:bg-[#ffc329]">
@@ -563,7 +516,7 @@
                                                 </div>
                                                 <div class="flex justify-between py-1">
                                                     <span class="text-[#ffc329]">Tenant ID:</span>
-                                                    <span>@{{ formData.tenant_id }}</span>
+                                                    <span>@{{ formData.tenant_id || 'Generating...' }}</span>
                                                 </div>
                                                 <div class="flex justify-between py-1">
                                                     <span class="text-[#ffc329]">Password:</span>
@@ -989,7 +942,7 @@
                     confirmation: false,
                     archiveConfirmation: false,
                     extendModal: false,
-                    ShowTenants: {{ $showTenants ? 'true' : 'false' }},
+                    ShowTenants: {{ $tenants->isEmpty() ? 'false' : 'true' }},
                     adminTitle: 'Add Tenants',
                     tenants: @json($tenants),
                     filteredTenants: @json($tenants),
@@ -1002,7 +955,7 @@
                         subscriptions: '',
                         start_date: '',
                         end_date: '',
-                        tenant_id: '',
+                        tenant_id: 'Will be generated',
                         password: 'password123'
                     },
                     selectedTenantId: null,
@@ -1051,8 +1004,8 @@
                     this.isAddTenant = !this.isAddTenant;
                 },
                 toggledReceipt() {
-                    this.ShowTenants = !this.ShowTenants;
-                    this.isEmpty = !this.isEmpty
+                    this.isEmpty = !this.isEmpty;
+                    this.ShowTenants = !this.isEmpty;
                     this.isAddTenant = !this.isAddTenant;
                     this.confirmation = !this.confirmation;
                 },
@@ -1070,10 +1023,17 @@
                     this.formData.start_date = formData.get('start_date');
                     this.formData.end_date = formData.get('end_date');
 
-                    // Generate a tenant ID in 10001 format
-                    const baseNum = 10000;
-                    const randomNum = Math.floor(Math.random() * 9000) + 1; // Random number between 1 and 9000
-                    this.formData.tenant_id = (baseNum + randomNum).toString();
+                    // Generate a tenant ID on the client side for preview
+                    // Format: 5-digit number (10001)
+                    const roomNum = formData.get('room_number');
+                    // Create a 5-digit ID starting with 1, followed by room number padded with zeros
+                    const paddedRoomNum = roomNum.toString().padStart(4, '0');
+                    this.formData.tenant_id = `1${paddedRoomNum}`.slice(0, 5);
+
+                    // Ensure tenant_id is set and not empty
+                    if (!this.formData.tenant_id) {
+                        this.formData.tenant_id = `1${paddedRoomNum}`.slice(0, 5);
+                    }
 
                     // Show confirmation modal
                     this.confirmation = true;
@@ -1208,6 +1168,8 @@
 
                     // Update isEmpty based on filtered results
                     this.isEmpty = result.length === 0;
+                    // Update ShowTenants to be the opposite of isEmpty
+                    this.ShowTenants = !this.isEmpty;
                 },
                 clearSearch() {
                     this.searchQuery = '';

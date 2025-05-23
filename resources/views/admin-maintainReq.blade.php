@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
         rel="stylesheet">
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="script.js" defer></script>
     <style>
         .fade-enter-active,
         .fade-leave-active {
@@ -35,7 +35,6 @@
 
 <body class="flex bg-gray-900"
     style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
-</body>
 <div id="app" class="flex justify-between w-full">
     <!-- Sidebar -->
     <aside class="w-72 bg-gray-800 min-h-screen p-4 space-y-6 sticky top-0 h-screen overflow-y-auto">
@@ -96,7 +95,7 @@
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
                                     </path>
                                 </svg>
-                                <span class="whitespace-nowrap">Payment History</span>
+                                <span class="whitespace-nowrap">Payment</span>
                             </div>
                         </span>
                     </a>
@@ -320,7 +319,7 @@
                             class="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
                             <button @click="toggleProfileModal"
                                 class="block w-full text-left px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                                Edit Profile
+                                Edit admin account
                             </button>
                             <a href="{{ url('/') }}"
                                 class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -336,7 +335,7 @@
                         <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
                             <div class="flex items-start justify-between">
                                 <h2 id="modalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                                    Profile
+                                    Edit Admin Account
                                 </h2>
                                 <button type="button" @click="toggleProfileModal"
                                     class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
@@ -352,49 +351,37 @@
                             <div class="mt-4 space-y-6">
                                 <!-- Profile Content -->
                                 <form @submit.prevent="handleDone">
-                                    <div
-                                        class="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full bg-[url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?...')] bg-cover bg-center bg-no-repeat">
-                                    </div>
-
-                                    <a href="#">
-                                        <h2 class="text-center mt-1 font-semibold dark:text-gray-300 hover:underline">
-                                            Upload Profile
-                                        </h2>
-                                    </a>
 
 
-                                    <!-- Name Inputs -->
+                                    <!-- Username and Current Password -->
                                     <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
                                         <div class="w-full mb-4 mt-6">
-                                            <label class="mb-2 dark:text-gray-300">Janna</label>
+                                            <label class="mb-2 dark:text-gray-300">Username</label>
                                             <input type="text"
                                                 class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                                placeholder="First Name">
+                                                placeholder="Enter username">
                                         </div>
                                         <div class="w-full mb-4 lg:mt-6">
-                                            <label class="dark:text-gray-300">Santos</label>
-                                            <input type="text"
+                                            <label class="dark:text-gray-300">Current Password</label>
+                                            <input type="password"
                                                 class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                                                placeholder="Last Name">
+                                                placeholder="Current password">
                                         </div>
                                     </div>
 
-                                    <!-- Sex and Date of Birth -->
+                                    <!-- New Password and Confirm Password -->
                                     <div class="flex flex-col lg:flex-row gap-2 justify-center w-full">
                                         <div class="w-full">
-                                            <h3 class="dark:text-gray-300 mb-2">Gender</h3>
-                                            <select
-                                                class="w-48 h-10 text-gray-200 border-2 rounded-lg px-2 py-1 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
-                                                <option disabled selected hidden value="">Select Gender</option>
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
-                                                <option value="other">Other</option>
-                                            </select>
+                                            <h3 class="dark:text-gray-300 mb-2">New Password</h3>
+                                            <input type="password"
+                                                class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                                                placeholder="New password">
                                         </div>
                                         <div class="w-full">
-                                            <h3 class="dark:text-gray-300 mb-2">Contact</h3>
-                                            <input type="text" placeholder="XXXX-XXX-XXX"
-                                                class="text-grey p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
+                                            <h3 class="dark:text-gray-300 mb-2">Confirm Password</h3>
+                                            <input type="password"
+                                                class="mt-2 p-4 w-48 h-8 border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                                                placeholder="Confirm password">
                                         </div>
                                     </div>
 
@@ -543,9 +530,9 @@
                                                 <div class="flex items-center gap-x-2">
                                                     <div>
                                                         <h2 class="text-sm font-medium text-gray-800 dark:text-white ">
-                                                            {{ $request->tenant_name }}</h2>
+                                                            {{ $request->tenant->tenant_name }}</h2>
                                                         <p class="text-xs font-normal text-gray-600 dark:text-gray-400">
-                                                            {{ $request->tenant_contact }}</p>
+                                                            {{ $request->tenant->tenant_contact }}</p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -555,12 +542,12 @@
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                 <div class="flex items-center gap-x-6">
-                                                    <button
+                                                    <button @click="openViewModal('{{ $request->id }}', '{{ $request->description }}', '{{ $request->priority }}')"
                                                         class="text-gray-500 transition-colors duration-200 hover:underline dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
                                                         View
                                                     </button>
 
-                                                    <button
+                                                    <button @click="openManageModal('{{ $request->id }}', '{{ $request->status }}')"
                                                         class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                                         Manage
                                                     </button>
@@ -583,6 +570,101 @@
             </section>
         </section>
 
+        <!-- View Request Modal -->
+        <section v-if="isViewModalOpen"
+            class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4" role="dialog"
+            aria-modal="true" aria-labelledby="viewModalTitle">
+            <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
+                <div class="flex items-start justify-between">
+                    <h2 id="viewModalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
+                        Request Details
+                    </h2>
+                    <button type="button" @click="isViewModalOpen = false"
+                        class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                        aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="mt-4 space-y-6">
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Urgency Level</h3>
+                            <p class="mt-1 text-gray-600 dark:text-gray-400" v-text="currentRequestPriority"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Description</h3>
+                            <p class="mt-1 text-gray-600 dark:text-gray-400" v-text="currentRequestDescription"></p>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button @click="isViewModalOpen = false"
+                            class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manage Request Modal -->
+        <section v-if="isManageModalOpen"
+            class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4" role="dialog"
+            aria-modal="true" aria-labelledby="manageModalTitle">
+            <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
+                <div class="flex items-start justify-between">
+                    <h2 id="manageModalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
+                        Update Request Status
+                    </h2>
+                    <button type="button" @click="isManageModalOpen = false"
+                        class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                        aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="mt-4 space-y-6">
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Current Status</h3>
+                            <p class="mt-1 text-gray-600 dark:text-gray-400" v-text="currentRequestStatus"></p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Change Status To</h3>
+                            <div class="mt-2 space-y-2">
+                                <button @click="updateRequestStatus('Pending')"
+                                    class="w-full px-4 py-2 text-left text-red-500 bg-red-100 rounded-md hover:bg-red-200">
+                                    Pending
+                                </button>
+                                <button @click="updateRequestStatus('In Progress')"
+                                    class="w-full px-4 py-2 text-left text-blue-500 bg-blue-100 rounded-md hover:bg-blue-200">
+                                    In Progress
+                                </button>
+                                <button @click="updateRequestStatus('Completed')"
+                                    class="w-full px-4 py-2 text-left text-green-500 bg-green-100 rounded-md hover:bg-green-200">
+                                    Completed
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button @click="isManageModalOpen = false"
+                            class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <script>
@@ -599,8 +681,16 @@
                     isRegularInfoOpen: false,
                     isVIPInfoOpen: false,
                     isAddStaff: false,
+                    isViewModalOpen: false,
+                    isManageModalOpen: false,
                     currentSection: 'adminDashboard',
                     adminTitle: 'Maintenance Requests',
+
+                    // Request data
+                    currentRequestId: null,
+                    currentRequestStatus: '',
+                    currentRequestDescription: '',
+                    currentRequestPriority: '',
 
                     // Clock Data
                     time: {
@@ -680,6 +770,44 @@
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
+                    });
+                },
+                openViewModal(id, description, priority) {
+                    this.currentRequestId = id;
+                    this.currentRequestDescription = description;
+                    this.currentRequestPriority = priority;
+                    this.isViewModalOpen = true;
+                },
+                openManageModal(id, status) {
+                    this.currentRequestId = id;
+                    this.currentRequestStatus = status;
+                    this.isManageModalOpen = true;
+                },
+                updateRequestStatus(status) {
+                    // Create form data
+                    const formData = new FormData();
+                    formData.append('status', status);
+                    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+                    // Send AJAX request to update status
+                    fetch(`/admin/maintenance-requests/${this.currentRequestId}/update-status`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Close modal and reload page to show updated status
+                            this.isManageModalOpen = false;
+                            alert('Status updated successfully!');
+                            window.location.reload();
+                        } else {
+                            alert('Failed to update status: ' + (data.message || 'Please try again.'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
                     });
                 }
             },

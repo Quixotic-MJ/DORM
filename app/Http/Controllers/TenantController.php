@@ -146,14 +146,18 @@ class TenantController extends Controller
     {
         $tenant = Auth::guard('tenant')->user();
 
-        // Check if tenant has a pending maintenance request
-        $hasPendingRequest = \App\Models\MaintenanceRequest::where('tenant_id', $tenant->id)
-            ->where('status', 'Pending')
-            ->exists();
+        // Get the latest maintenance request for the tenant
+        $maintenanceRequest = \App\Models\MaintenanceRequest::where('tenant_id', $tenant->id)
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        // Check if tenant has a pending or in-progress maintenance request
+        $hasPendingRequest = $maintenanceRequest && ($maintenanceRequest->status == 'Pending' || $maintenanceRequest->status == 'In Progress');
 
         return view('tenant-request', [
             'adminTitle' => 'Maintenance Request',
-            'hasPendingRequest' => $hasPendingRequest
+            'hasPendingRequest' => $hasPendingRequest,
+            'maintenanceRequest' => $maintenanceRequest
         ]);
     }
 
@@ -175,14 +179,14 @@ class TenantController extends Controller
 
         $tenant = Auth::guard('tenant')->user();
 
-        // Check if tenant already has a pending request
+        // Check if tenant already has a pending or in-progress request
         $hasPendingRequest = \App\Models\MaintenanceRequest::where('tenant_id', $tenant->id)
-            ->where('status', 'Pending')
+            ->whereIn('status', ['Pending', 'In Progress'])
             ->exists();
 
         if ($hasPendingRequest) {
             return redirect()->route('tenant.request')
-                ->with('error', 'You already have a pending maintenance request. Please wait for it to be processed.');
+                ->with('error', 'You already have a pending or in-progress maintenance request. Please wait for it to be completed.');
         }
 
         // Create the maintenance request
@@ -201,5 +205,32 @@ class TenantController extends Controller
         $maintenanceRequest->save();
 
         return redirect()->route('tenant.request')->with('success', 'Maintenance request submitted successfully.');
+    }
+
+    /**
+     * Change tenant password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        $tenant = Auth::guard('tenant')->user();
+
+        // Check if current password matches
+        if (!password_verify($request->current_password, $tenant->tenant_password)) {
+            return back()->with('error', 'Current password is incorrect.');
+        }
+
+        // Update password
+        $tenant->tenant_password = bcrypt($request->new_password);
+        $tenant->save();
+
+        return back()->with('success', 'Password changed successfully.');
     }
 }
