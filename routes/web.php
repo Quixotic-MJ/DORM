@@ -26,6 +26,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::get('/archive', [AdminController::class, 'archive'])->name('archive');
     Route::get('/maintenance-requests', [AdminController::class, 'maintenanceRequests'])->name('maintenance-requests');
     Route::post('/maintenance-requests/{id}/update-status', [AdminController::class, 'updateRequestStatus'])->name('update-request-status');
+    Route::match(['delete', 'post'], '/maintenance-requests/{id}', [AdminController::class, 'deleteMaintenanceRequest'])->name('delete-maintenance-request');
     Route::get('/manage-dorm', [AdminController::class, 'manageDorm'])->name('manage-dorm');
     Route::post('/update-dorm-settings', [AdminController::class, 'updateDormSettings'])->name('update-dorm-settings');
     Route::get('/payment-history', [AdminController::class, 'paymentHistory'])->name('payment-history');

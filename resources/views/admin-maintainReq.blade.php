@@ -200,117 +200,16 @@
                 </div>
 
 
-                <button @click="toggleNotificationModal" class="p-2 text-white rounded-full">
-                    🔔
-                </button>
-
-                <!-- Notification Modal -->
-                <div v-if="isNotificationModalOpen" class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4"
-                    role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-                    <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
-                        <div class="flex items-start justify-between">
-                            <h2 id="modalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                                Notification
-                            </h2>
-
-                            <button type="button" @click="toggleNotificationModal"
-                                class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-                                aria-label="Close">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        <div class="mt-4 flex-col space-y-6 max-h-[70vh] overflow-y-auto scrollbar-hide">
-                            <!-- Limit height and enable scrolling -->
-                            <div class="max-w-4xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10,
-                                        2019</span>
-                                    <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                                        tabindex="0" role="button">Delete</a>
-                                </div>
-
-                                <div class="mt-2">
-                                    <a href="#"
-                                        class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-                                        tabindex="0" role="link">Staff</a>
-                                    <p class="mt-2 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit, amet
-                                        consectetur
-                                        adipisicing elit. Tempora expedita dicta totam aspernatur doloremque.
-                                        Excepturi
-                                        iste
-                                        iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in
-                                        modi
-                                        ratione
-                                        libero!</p>
-                                </div>
-                            </div>
-
-                            <div class="max-w-4xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10,
-                                        2019</span>
-                                    <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                                        tabindex="0" role="button">Delete</a>
-                                </div>
-
-                                <div class="mt-2">
-                                    <a href="#"
-                                        class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-                                        tabindex="0" role="link">Promo</a>
-                                    <p class="mt-2 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit, amet
-                                        consectetur
-                                        adipisicing elit. Tempora expedita dicta totam aspernatur doloremque.
-                                        Excepturi
-                                        iste
-                                        iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in
-                                        modi
-                                        ratione
-                                        libero!</p>
-                                </div>
-                            </div>
-
-                            <div class="max-w-4xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm font-light text-gray-600 dark:text-gray-400">Mar 10,
-                                        2019</span>
-                                    <a class="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500"
-                                        tabindex="0" role="button">Delete</a>
-                                </div>
-
-                                <div class="mt-2">
-                                    <a href="#"
-                                        class="text-xl font-bold text-gray-700 dark:text-white hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
-                                        tabindex="0" role="link">Promo</a>
-                                    <p class="mt-2 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit, amet
-                                        consectetur
-                                        adipisicing elit. Tempora expedita dicta totam aspernatur doloremque.
-                                        Excepturi
-                                        iste
-                                        iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in
-                                        modi
-                                        ratione
-                                        libero!</p>
-                                </div>
-                            </div>
-
-
-                            <!-- Repeat the above block for other content -->
-
-                        </div>
-                    </div>
-                </div>
 
 
                 <div class="relative inline-block">
                     <!-- Dropdown toggle button -->
                     <button @click="toggleDropdown"
                         class="relative z-10 block p-2 border-transparent rounded-md focus:outline-none">
-                        <img src="https://i.pravatar.cc/40" class="w-8 h-8 rounded-full" alt="Avatar" />
+                        <svg class="w-8 h-8 text-[#ffc329]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
                     </button>
 
                     <!-- Dropdown menu -->
@@ -411,32 +310,54 @@
 
 
         <section>
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-4 gap-4 my-6 text-white">
-                <div class="bg-gray-800 p-4 rounded-lg text-center">
-                    <div class="text-orange-400 text-2xl">👨‍👩‍👧‍👦</div>
-                    <p class="font-normal">Total Tenants</p>
-                    <p class="text-lg font-semibold">{{ $totalTenants }}</p>
+
+
+            <!-- Filter and Search Bar -->
+            <section class="container px-4 mx-auto mt-8 mb-6">
+                <div class="flex flex-col md:flex-row justify-between gap-4">
+                    <!-- Search Bar -->
+                    <div class="relative flex-1">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <input type="search" id="search" class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by room number or tenant name" v-model="searchQuery">
+                    </div>
+
+                    <!-- Filter Dropdowns -->
+                    <div class="flex flex-wrap gap-2">
+                        <!-- Status Filter -->
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="statusFilter">
+                            <option value="">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+
+                        <!-- Request Type Filter -->
+                        <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="typeFilter">
+                            <option value="">All Types</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Appliance">Appliance</option>
+                            <option value="Other">Other</option>
+                        </select>
+
+                        <!-- Date Filter -->
+                        <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="dateFilter">
+
+                        <!-- Clear Filters Button -->
+                        <button @click="clearFilters" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700">
+                            Clear Filters
+                        </button>
+                    </div>
                 </div>
-                <div class="bg-gray-800 p-4 rounded-lg text-center">
-                    <div class="text-green-400 text-2xl">💰</div>
-                    <p class="font-normal">Total balance</p>
-                    <p class="text-lg font-semibold">${{ number_format($totalBalance, 2) }}</p>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg text-center">
-                    <div class="text-blue-400 text-2xl">🏠</div>
-                    <p class="font-normal">Rooms Available</p>
-                    <p class="text-lg font-semibold">{{ $availableRooms }}</p>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg text-center">
-                    <div class="text-cyan-400 text-2xl">🛠️</div>
-                    <p class="font-normal">Pending Request</p>
-                    <p class="text-lg font-semibold">{{ $pendingRequests }}</p>
-                </div>
-            </div>
+            </section>
 
             <!-- Table -->
-            <section class="container px-4 mx-auto mt-8">
+            <section class="container px-4 mx-auto mt-4">
                 <div class="flex flex-col">
                     <div class="-mx-4 -my-2 overflow-x-auto scrollbar-hide max-h-128 sm:-mx-6 lg:-mx-8">
                         <div class="inline-block min-w-full max-h-128 align-middle md:px-6 lg:px-4">
@@ -457,7 +378,11 @@
                                             </th>
                                             <th scope="col"
                                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Date
+                                                Date & Time
+                                            </th>
+                                            <th scope="col"
+                                                class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                Request Type
                                             </th>
                                             <th scope="col"
                                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -465,11 +390,11 @@
                                             </th>
                                             <th scope="col"
                                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Tenant
+                                                Description
                                             </th>
                                             <th scope="col"
                                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                Description
+                                                Tenant
                                             </th>
                                             <th scope="col" class="relative py-3.5 px-4">
                                                 <span class="sr-only">Actions</span>
@@ -479,7 +404,14 @@
                                     <tbody
                                         class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                         @forelse($maintenanceRequests as $request)
-                                        <tr>
+                                        <tr class="maintenance-request-row"
+                                            data-room="{{ $request->room_number }}"
+                                            data-date="{{ $request->date }}"
+                                            data-type="{{ $request->request_type ?? 'Other' }}"
+                                            data-status="{{ $request->status }}"
+                                            data-tenant="{{ $request->tenant->tenant_name }}"
+                                            data-description="{{ $request->description }}"
+                                            >
                                             <td
                                                 class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                                 <div class="inline-flex items-center gap-x-3">
@@ -489,6 +421,18 @@
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {{ $request->date }}</td>
+                                            <td
+                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <span class="px-2 py-1 text-xs rounded-full
+                                                    @if($request->request_type == 'Plumbing') bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
+                                                    @elseif($request->request_type == 'Electrical') bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300
+                                                    @elseif($request->request_type == 'Furniture') bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300
+                                                    @elseif($request->request_type == 'Appliance') bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                                                    @else bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300
+                                                    @endif">
+                                                    {{ $request->request_type ?? 'Other' }}
+                                                </span>
+                                            </td>
                                             <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                 @if($request->status == 'Completed')
                                                 <div
@@ -527,6 +471,10 @@
                                             </td>
                                             <td
                                                 class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                <span class="line-clamp-1">{{ Str::limit($request->description, 30) }}</span>
+                                            </td>
+                                            <td
+                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 <div class="flex items-center gap-x-2">
                                                     <div>
                                                         <h2 class="text-sm font-medium text-gray-800 dark:text-white ">
@@ -536,20 +484,34 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td
-                                                class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {{ $request->description }}
-                                            </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                 <div class="flex items-center gap-x-6">
                                                     <button @click="openViewModal('{{ $request->id }}', '{{ $request->description }}', '{{ $request->priority }}')"
-                                                        class="text-gray-500 transition-colors duration-200 hover:underline dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                        View
+                                                        class="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                        </svg>
                                                     </button>
 
-                                                    <button @click="openManageModal('{{ $request->id }}', '{{ $request->status }}')"
-                                                        class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                        Manage
+                                                    <button @click="openManageModal($event)"
+                                                        class="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none"
+                                                        data-id="{{ $request->id }}"
+                                                        data-status="{{ $request->status }}"
+                                                        data-priority="{{ $request->priority }}"
+                                                        data-type="{{ $request->request_type ?? 'Other' }}"
+                                                        data-description="{{ $request->description }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                        </svg>
+                                                    </button>
+
+                                                    <button @click="removeRequest('{{ $request->id }}')"
+                                                        class="text-red-500 transition-colors duration-200 hover:text-red-700 focus:outline-none"
+                                                        title="Remove Request">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
                                                     </button>
                                                 </div>
                                             </td>
@@ -615,10 +577,10 @@
         <section v-if="isManageModalOpen"
             class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4" role="dialog"
             aria-modal="true" aria-labelledby="manageModalTitle">
-            <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
+            <div class="w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
                 <div class="flex items-start justify-between">
                     <h2 id="manageModalTitle" class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
-                        Update Request Status
+                        Manage Maintenance Request
                     </h2>
                     <button type="button" @click="isManageModalOpen = false"
                         class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
@@ -632,33 +594,83 @@
                 </div>
 
                 <div class="mt-4 space-y-6">
-                    <div class="space-y-4">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Current Status</h3>
-                            <p class="mt-1 text-gray-600 dark:text-gray-400" v-text="currentRequestStatus"></p>
+                    <!-- Request Details -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Request Type</h3>
+                                <p class="mt-1 text-gray-600 dark:text-gray-400" v-text="currentRequestType"></p>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Urgency Level</h3>
+                                <p class="mt-1 text-gray-600 dark:text-gray-400" v-text="currentRequestPriority"></p>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Current Status</h3>
+                                <p class="mt-1 text-gray-600 dark:text-gray-400" v-text="currentRequestStatus"></p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Change Status To</h3>
-                            <div class="mt-2 space-y-2">
-                                <button @click="updateRequestStatus('Pending')"
-                                    class="w-full px-4 py-2 text-left text-red-500 bg-red-100 rounded-md hover:bg-red-200">
-                                    Pending
-                                </button>
-                                <button @click="updateRequestStatus('In Progress')"
-                                    class="w-full px-4 py-2 text-left text-blue-500 bg-blue-100 rounded-md hover:bg-blue-200">
-                                    In Progress
-                                </button>
-                                <button @click="updateRequestStatus('Completed')"
-                                    class="w-full px-4 py-2 text-left text-green-500 bg-green-100 rounded-md hover:bg-green-200">
-                                    Completed
-                                </button>
+
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Description</h3>
+                                <p class="mt-1 text-gray-600 dark:text-gray-400" v-text="currentRequestDescription"></p>
+                            </div>
+
+                            <!-- Attached Images (Placeholder) -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">Attached Images</h3>
+                                <div class="mt-2 grid grid-cols-2 gap-2">
+                                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-2 text-center text-gray-500 dark:text-gray-400">
+                                        <p>No images attached</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-end">
+
+                    <!-- Status Update Section -->
+                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Update Status</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <button @click="updateRequestStatus('Pending')"
+                                class="w-full px-4 py-3 text-center text-red-500 bg-red-100 rounded-md hover:bg-red-200 flex items-center justify-center gap-2">
+                                <svg width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 3L3 9M3 3L9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <span>Pending</span>
+                            </button>
+                            <button @click="updateRequestStatus('In Progress')"
+                                class="w-full px-4 py-3 text-center text-blue-500 bg-blue-100 rounded-md hover:bg-blue-200 flex items-center justify-center gap-2">
+                                <svg width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <span>In Progress</span>
+                            </button>
+                            <button @click="updateRequestStatus('Completed')"
+                                class="w-full px-4 py-3 text-center text-green-500 bg-green-100 rounded-md hover:bg-green-200 flex items-center justify-center gap-2">
+                                <svg width="16" height="16" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <span>Completed</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Add Notes Section -->
+                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Add Notes</h3>
+                        <textarea v-model="maintenanceNotes" rows="3" class="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600" placeholder="Add notes about the maintenance work..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end space-x-4">
                         <button @click="isManageModalOpen = false"
-                            class="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700">
+                            class="px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
                             Cancel
+                        </button>
+                        <button @click="saveChanges"
+                            class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            Save Changes
                         </button>
                     </div>
                 </div>
@@ -691,6 +703,14 @@
                     currentRequestStatus: '',
                     currentRequestDescription: '',
                     currentRequestPriority: '',
+                    currentRequestType: '',
+                    maintenanceNotes: '',
+
+                    // Search and Filter
+                    searchQuery: '',
+                    statusFilter: '',
+                    typeFilter: '',
+                    dateFilter: '',
 
                     // Clock Data
                     time: {
@@ -725,7 +745,90 @@
                     ]
                 };
             },
+            computed: {
+                filteredRequests() {
+                    // Get all maintenance requests from the DOM
+                    const requests = [];
+                    document.querySelectorAll('tbody tr').forEach(row => {
+                        // Skip if it's the "No maintenance requests found" row
+                        if (row.querySelector('td[colspan]')) return;
+
+                        // Extract data from the row
+                        const roomNumber = row.querySelector('td:nth-child(1)').textContent.trim().replace('#', '');
+                        const date = row.querySelector('td:nth-child(2)').textContent.trim();
+                        const requestType = row.querySelector('td:nth-child(3) span').textContent.trim();
+                        const status = row.querySelector('td:nth-child(4) h2') ? row.querySelector('td:nth-child(4) h2').textContent.trim() : '';
+                        const description = row.querySelector('td:nth-child(5)').textContent.trim();
+                        const tenantName = row.querySelector('td:nth-child(6) h2') ? row.querySelector('td:nth-child(6) h2').textContent.trim() : '';
+
+                        requests.push({
+                            roomNumber,
+                            date,
+                            requestType,
+                            status,
+                            description,
+                            tenantName
+                        });
+                    });
+
+                    // Apply filters
+                    return requests.filter(request => {
+                        // Search filter
+                        if (this.searchQuery && !request.roomNumber.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+                            !request.tenantName.toLowerCase().includes(this.searchQuery.toLowerCase())) {
+                            return false;
+                        }
+
+                        // Status filter
+                        if (this.statusFilter && request.status !== this.statusFilter) {
+                            return false;
+                        }
+
+                        // Type filter
+                        if (this.typeFilter && request.requestType !== this.typeFilter) {
+                            return false;
+                        }
+
+                        // Date filter
+                        if (this.dateFilter) {
+                            const filterDate = new Date(this.dateFilter).toDateString();
+                            const requestDate = new Date(request.date).toDateString();
+                            if (filterDate !== requestDate) {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    });
+                }
+            },
             methods: {
+                removeRequest(id) {
+                    if (confirm('Are you sure you want to remove this maintenance request?')) {
+                        // Create form data
+                        const formData = new FormData();
+                        formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+                        formData.append('_method', 'DELETE');
+
+                        // Send AJAX request to delete the request
+                        fetch(`/admin/maintenance-requests/${id}`, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                window.location.reload();
+                            } else {
+                                alert('Failed to remove request: ' + (data.message || 'Please try again.'));
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred. Please try again.');
+                        });
+                    }
+                },
                 toggleDropdown() {
                     this.isOpen = !this.isOpen;
                 },
@@ -748,7 +851,6 @@
                     this.isStudentInfoOpen = false;
                     this.isRegularInfoOpen = false;
                     this.isVIPInfoOpen = false;
-                    alert('Changes saved successfully!');
                 },
                 toggleModal(modalName) {
                     this[modalName] = !this[modalName];
@@ -772,16 +874,53 @@
                         day: 'numeric'
                     });
                 },
+                filterRequest(request) {
+                    // Search filter
+                    if (this.searchQuery &&
+                        !request.room_number.toLowerCase().includes(this.searchQuery.toLowerCase()) &&
+                        !request.tenant_name.toLowerCase().includes(this.searchQuery.toLowerCase())) {
+                        return false;
+                    }
+
+                    // Status filter
+                    if (this.statusFilter && request.status !== this.statusFilter) {
+                        return false;
+                    }
+
+                    // Type filter
+                    if (this.typeFilter && request.request_type !== this.typeFilter) {
+                        return false;
+                    }
+
+                    // Date filter
+                    if (this.dateFilter) {
+                        const filterDate = new Date(this.dateFilter).toDateString();
+                        const requestDate = new Date(request.date).toDateString();
+                        if (filterDate !== requestDate) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                },
                 openViewModal(id, description, priority) {
                     this.currentRequestId = id;
                     this.currentRequestDescription = description;
                     this.currentRequestPriority = priority;
                     this.isViewModalOpen = true;
                 },
-                openManageModal(id, status) {
-                    this.currentRequestId = id;
-                    this.currentRequestStatus = status;
+                openManageModal(event) {
+                    // Get all data from data attributes of the clicked button
+                    const button = event.currentTarget;
+                    this.currentRequestId = button.getAttribute('data-id');
+                    this.currentRequestStatus = button.getAttribute('data-status');
+                    this.currentRequestPriority = button.getAttribute('data-priority');
+                    this.currentRequestType = button.getAttribute('data-type');
+                    this.currentRequestDescription = button.getAttribute('data-description') || '';
+
+                    this.maintenanceNotes = '';
                     this.isManageModalOpen = true;
+                    console.log('Manage modal opened for request ID:', this.currentRequestId);
                 },
                 updateRequestStatus(status) {
                     // Create form data
@@ -799,7 +938,6 @@
                         if (data.success) {
                             // Close modal and reload page to show updated status
                             this.isManageModalOpen = false;
-                            alert('Status updated successfully!');
                             window.location.reload();
                         } else {
                             alert('Failed to update status: ' + (data.message || 'Please try again.'));
@@ -809,12 +947,105 @@
                         console.error('Error:', error);
                         alert('An error occurred. Please try again.');
                     });
+                },
+                saveChanges() {
+                    // Create form data with status and notes
+                    const formData = new FormData();
+                    formData.append('status', this.currentRequestStatus);
+                    formData.append('notes', this.maintenanceNotes);
+                    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+                    // Send AJAX request to update status and notes
+                    fetch(`/admin/maintenance-requests/${this.currentRequestId}/update-status`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Close modal and reload page to show updated status
+                            this.isManageModalOpen = false;
+                            alert('Changes saved successfully!');
+                            window.location.reload();
+                        } else {
+                            alert('Failed to save changes: ' + (data.message || 'Please try again.'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                    });
+                },
+                clearFilters() {
+                    this.searchQuery = '';
+                    this.statusFilter = '';
+                    this.typeFilter = '';
+                    this.dateFilter = '';
+                    this.applyFilters();
+                },
+                applyFilters() {
+                    const rows = document.querySelectorAll('.maintenance-request-row');
+
+                    rows.forEach(row => {
+                        const roomNumber = row.getAttribute('data-room');
+                        const date = row.getAttribute('data-date');
+                        const type = row.getAttribute('data-type');
+                        const status = row.getAttribute('data-status');
+                        const tenant = row.getAttribute('data-tenant');
+                        const description = row.getAttribute('data-description');
+
+                        let visible = true;
+
+                        // Search filter
+                        if (this.searchQuery) {
+                            const searchLower = this.searchQuery.toLowerCase();
+                            const matchesRoom = roomNumber.toLowerCase().includes(searchLower);
+                            const matchesTenant = tenant.toLowerCase().includes(searchLower);
+
+                            if (!matchesRoom && !matchesTenant) {
+                                visible = false;
+                            }
+                        }
+
+                        // Status filter
+                        if (this.statusFilter && status !== this.statusFilter) {
+                            visible = false;
+                        }
+
+                        // Type filter
+                        if (this.typeFilter && type !== this.typeFilter) {
+                            visible = false;
+                        }
+
+                        // Date filter
+                        if (this.dateFilter) {
+                            const filterDate = new Date(this.dateFilter).toDateString();
+                            const requestDate = new Date(date).toDateString();
+                            if (filterDate !== requestDate) {
+                                visible = false;
+                            }
+                        }
+
+                        // Show or hide the row
+                        row.style.display = visible ? '' : 'none';
+                    });
                 }
             },
             mounted() {
                 document.addEventListener('click', this.handleClickOutside);
                 this.updateTime();
                 setInterval(this.updateTime, 1000);
+
+                // Add event listeners for search and filter inputs
+                this.$watch('searchQuery', this.applyFilters);
+                this.$watch('statusFilter', this.applyFilters);
+                this.$watch('typeFilter', this.applyFilters);
+                this.$watch('dateFilter', this.applyFilters);
+
+                // Initial filter application
+                this.$nextTick(() => {
+                    this.applyFilters();
+                });
 
                 // ✅ Optional fallback for Flowbite date picker
                 const dateRangeEl = document.getElementById('date-range-picker');

@@ -29,21 +29,29 @@ class AdminController extends Controller
     public function dashboard()
     {
         // Get total number of non-archived tenants
-        $totalTenants = Tenant::where('status', '!=', 'Archived')->count();
+        $totalTenants = Tenant::where(function($query) {
+            $query->where('status', '!=', 'Archived')
+                  ->orWhereNull('status');
+        })->count();
 
         // Get total amount paid by all tenants
         $totalBalance = Tenant::sum('total_paid');
 
         // Get rooms information
         $totalRooms = Room::count();
-        // Get rooms that are not at full capacity
+        // Get rooms that are not at full capacity (limited to 6 total rooms)
         $availableRooms = Room::whereRaw('current_occupants < capacity')->count();
+        // Ensure we don't exceed 6 rooms total
+        $availableRooms = min($availableRooms, 6);
 
         // Get pending maintenance requests
         $pendingRequests = \App\Models\MaintenanceRequest::where('status', 'Pending')->count();
 
-        // Get tenant information for the table
-        $tenants = Tenant::all();
+        // Get tenant information for the table (including tenants with null status)
+        $tenants = Tenant::where(function($query) {
+            $query->where('status', '!=', 'Archived')
+                  ->orWhereNull('status');
+        })->get();
 
         return view('admin-dashboard', [
             'adminTitle' => 'Dashboard',
@@ -62,12 +70,48 @@ class AdminController extends Controller
      */
     public function addTenant()
     {
-        // Get all tenants
-        $tenants = Tenant::all();
+        // Get all non-archived tenants
+        $tenants = Tenant::where('status', '!=', 'Archived')->get();
+
+        // Get room occupancy data
+        $roomOccupancy = [];
+        foreach ($tenants as $tenant) {
+            $roomNumber = $tenant->room_number;
+            if (!isset($roomOccupancy[$roomNumber])) {
+                // Get or create the room
+                $room = Room::firstOrCreate(
+                    ['room_number' => $roomNumber],
+                    [
+                        'room_type' => $tenant->subscriptions,
+                        'capacity' => 6, // All rooms have capacity of 6 as per requirements
+                        'current_occupants' => 0,
+                        'is_available' => true
+                    ]
+                );
+
+                // Calculate current occupants for this room
+                $currentOccupants = Tenant::where('room_number', $roomNumber)
+                    ->where('status', '!=', 'Archived')
+                    ->sum('total_occupants');
+
+                // Update room data if needed
+                if ($room->current_occupants != $currentOccupants) {
+                    $room->current_occupants = $currentOccupants;
+                    $room->is_available = $currentOccupants < $room->capacity;
+                    $room->save();
+                }
+
+                $roomOccupancy[$roomNumber] = [
+                    'current' => $currentOccupants,
+                    'capacity' => $room->capacity
+                ];
+            }
+        }
 
         return view('admin-addTenant', [
             'adminTitle' => 'Add Tenants',
             'tenants' => $tenants,
+            'roomOccupancy' => $roomOccupancy,
             'showTenants' => true
         ]);
     }
@@ -134,15 +178,16 @@ class AdminController extends Controller
      */
     public function maintenanceRequests()
     {
-        // Get total number of tenants
-        $totalTenants = Tenant::count();
+        // Get total number of non-archived tenants
+        $totalTenants = Tenant::where('status', '!=', 'Archived')->count();
 
         // Get total balance (sum of due amounts)
         $totalBalance = Tenant::sum('due_amount');
 
         // Get rooms information
         $totalRooms = Room::count();
-        $availableRooms = Room::where('is_available', true)->count();
+        // Get rooms that are not at full capacity
+        $availableRooms = Room::whereRaw('current_occupants < capacity')->count();
 
         // Get maintenance requests from the database with tenant relationship
         $maintenanceRequests = \App\Models\MaintenanceRequest::with('tenant')->orderBy('created_at', 'desc')->get();
@@ -250,6 +295,31 @@ class AdminController extends Controller
             'tenant_id' => 'nullable|string|max:255',
         ]);
 
+        // Check if the room exists, if not create it
+        $room = Room::firstOrCreate(
+            ['room_number' => $validated['room_number']],
+            [
+                'room_type' => $validated['subscriptions'],
+                'capacity' => 6, // All rooms have capacity of 6 as per requirements
+                'current_occupants' => 0,
+                'is_available' => true
+            ]
+        );
+
+        // Get the current occupants count for this room
+        $currentOccupants = Tenant::where('room_number', $validated['room_number'])
+            ->where('status', '!=', 'Archived')
+            ->sum('total_occupants');
+
+        // Check if adding new occupants would exceed room capacity
+        if ($currentOccupants + $validated['total_occupants'] > $room->capacity) {
+            return redirect()->route('admin.add-tenant')
+                ->with('error', 'Cannot add tenant. Room ' . $validated['room_number'] . ' has a capacity of ' . $room->capacity .
+                       ' and already has ' . $currentOccupants . ' occupants. Adding ' . $validated['total_occupants'] .
+                       ' more would exceed the capacity.')
+                ->withInput();
+        }
+
         // Generate a sequential tenant ID starting from 10001
         $highestTenant = Tenant::orderBy('tenant_id', 'desc')->first();
 
@@ -282,6 +352,11 @@ class AdminController extends Controller
             'status' => 'Active', // Default status
         ]);
 
+        // Update the room's current occupants count
+        $room->current_occupants = $currentOccupants + $validated['total_occupants'];
+        $room->is_available = $room->current_occupants < $room->capacity;
+        $room->save();
+
         return redirect()->route('admin.add-tenant')
             ->with('success', 'Tenant added successfully! Tenant ID: ' . $tenantId . ' | Password: password123')
             ->with('showTenants', true);
@@ -294,21 +369,22 @@ class AdminController extends Controller
      */
     public function paymentHistory()
     {
-        // Get total number of tenants
-        $totalTenants = Tenant::count();
+        // Get total number of non-archived tenants
+        $totalTenants = Tenant::where('status', '!=', 'Archived')->count();
 
         // Get total balance (sum of due amounts)
         $totalBalance = Tenant::sum('due_amount');
 
         // Get rooms information
         $totalRooms = Room::count();
-        $availableRooms = Room::where('is_available', true)->count();
+        // Get rooms that are not at full capacity
+        $availableRooms = Room::whereRaw('current_occupants < capacity')->count();
 
         // Get pending maintenance requests
         $pendingRequests = \App\Models\MaintenanceRequest::where('status', 'Pending')->count();
 
-        // Get tenant information for the payment history table
-        $tenants = Tenant::with('payments')->get();
+        // Get tenant information for the payment history table (excluding archived tenants)
+        $tenants = Tenant::where('status', '!=', 'Archived')->with('payments')->get();
 
         // Get all payments for the payment history table
         $payments = \App\Models\Payment::with('tenant')->orderBy('payment_date', 'desc')->get();
@@ -378,6 +454,34 @@ class AdminController extends Controller
     }
 
     /**
+     * Delete a maintenance request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteMaintenanceRequest(Request $request, $id)
+    {
+        try {
+            // Find the maintenance request
+            $maintenanceRequest = \App\Models\MaintenanceRequest::findOrFail($id);
+
+            // Delete the maintenance request
+            $maintenanceRequest->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Maintenance request deleted successfully!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete maintenance request: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Record a payment for a tenant.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -399,7 +503,7 @@ class AdminController extends Controller
             // Get the dorm settings to calculate the due amount
             $settings = $this->getDormSettings();
 
-            // Calculate due amount based on subscription and number of occupants
+            // Calculate due amount based on subscription, number of occupants, and days of stay
             $subscriptionPrice = 0;
             switch ($tenant->subscriptions) {
                 case 'Student Plan':
@@ -413,7 +517,14 @@ class AdminController extends Controller
                     break;
             }
 
-            $dueAmount = $subscriptionPrice * $tenant->total_occupants;
+            // Calculate days of stay
+            $startDate = $tenant->created_at;
+            $endDate = $tenant->lease_end ? new \DateTime($tenant->lease_end) : now();
+            $daysOfStay = $startDate->diff($endDate)->days;
+            $daysOfStay = max(1, $daysOfStay); // Ensure at least 1 day
+
+            // Calculate due amount: subscription price * occupants * days of stay
+            $dueAmount = $subscriptionPrice * $tenant->total_occupants * $daysOfStay;
 
             // Update tenant's total paid amount
             $tenant->total_paid += $validated['amount'];
@@ -444,6 +555,56 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.payment-history')
                 ->with('error', 'Failed to record payment: ' . $e->getMessage());
+        }
+    }
+    /**
+     * Update due amounts for all tenants.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateAllDueAmounts()
+    {
+        try {
+            // Get all tenants
+            $tenants = Tenant::all();
+            $settings = $this->getDormSettings();
+            $updatedCount = 0;
+
+            foreach ($tenants as $tenant) {
+                // Calculate due amount based on subscription, number of occupants, and days of stay
+                $subscriptionPrice = 0;
+                switch ($tenant->subscriptions) {
+                    case 'Student Plan':
+                        $subscriptionPrice = $settings['pricing']['student_plan'];
+                        break;
+                    case 'Regular Plan':
+                        $subscriptionPrice = $settings['pricing']['regular_plan'];
+                        break;
+                    case 'Premium Plan':
+                        $subscriptionPrice = $settings['pricing']['vip_plan'];
+                        break;
+                }
+
+                // Calculate days of stay
+                $startDate = $tenant->created_at;
+                $endDate = $tenant->lease_end ? new \DateTime($tenant->lease_end) : now();
+                $daysOfStay = $startDate->diff($endDate)->days;
+                $daysOfStay = max(1, $daysOfStay); // Ensure at least 1 day
+
+                // Calculate due amount: subscription price * occupants * days of stay
+                $dueAmount = $subscriptionPrice * $tenant->total_occupants * $daysOfStay;
+
+                // Update tenant's due amount
+                $tenant->due_amount = $dueAmount - $tenant->total_paid;
+                $tenant->save();
+                $updatedCount++;
+            }
+
+            return redirect()->back()
+                ->with('success', "Due amounts updated for {$updatedCount} tenants.");
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Failed to update due amounts: ' . $e->getMessage());
         }
     }
 }

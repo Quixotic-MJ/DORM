@@ -185,7 +185,10 @@
                     <!-- Profile dropdown -->
                     <button @click="toggleDropdown"
                         class="relative z-10 block p-2 border-transparent rounded-md focus:outline-none">
-                        <img src="https://i.pravatar.cc/40" class="w-8 h-8 rounded-full" alt="Avatar" />
+                        <svg class="w-8 h-8 text-[#ffc329]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
                     </button>
 
                     <!-- Dropdown menu -->
@@ -272,29 +275,7 @@
             </div>
         </div>
 
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-4 gap-4 my-6 text-white">
-            <div class="bg-gray-800 p-4 rounded-lg text-center">
-                <div class="text-orange-400 text-2xl">👨‍👩‍👧‍👦</div>
-                <p class="font-normal">Total Tenants</p>
-                <p class="text-lg font-semibold">{{ $totalTenants }}</p>
-            </div>
-            <div class="bg-gray-800 p-4 rounded-lg text-center">
-                <div class="text-green-400 text-2xl">💰</div>
-                <p class="font-normal">Total balance</p>
-                <p class="text-lg font-semibold">${{ number_format($totalBalance, 2) }}</p>
-            </div>
-            <div class="bg-gray-800 p-4 rounded-lg text-center">
-                <div class="text-blue-400 text-2xl">🏠</div>
-                <p class="font-normal">Rooms Available</p>
-                <p class="text-lg font-semibold">{{ $availableRooms }}</p>
-            </div>
-            <div class="bg-gray-800 p-4 rounded-lg text-center">
-                <div class="text-cyan-400 text-2xl">🛠️</div>
-                <p class="font-normal">Pending Request</p>
-                <p class="text-lg font-semibold">{{ $pendingRequests }}</p>
-            </div>
-        </div>
+
 
         <!-- Dynamic content section -->
         <section class="container px-4 mx-auto mt-8">
@@ -346,7 +327,7 @@
                                             ]
                                         ];
 
-                                        // Calculate due amount based on subscription and number of occupants
+                                        // Calculate due amount based on subscription, number of occupants, and days of stay
                                         $subscriptionPrice = 0;
                                         switch ($tenant->subscriptions) {
                                             case 'Student Plan':
@@ -360,7 +341,19 @@
                                                 break;
                                         }
 
-                                        $dueAmount = $subscriptionPrice * $tenant->total_occupants;
+                                        // Calculate days of stay based on start_date and lease_end
+                                        $startDate = $tenant->start_date ? new DateTime($tenant->start_date) : new DateTime($tenant->created_at);
+                                        $endDate = $tenant->lease_end ? new DateTime($tenant->lease_end) : new DateTime(now());
+
+                                        // Calculate days of stay using timestamp difference for more accurate results
+                                        $startTimestamp = $startDate->getTimestamp();
+                                        $endTimestamp = $endDate->getTimestamp();
+                                        $secondsDiff = $endTimestamp - $startTimestamp;
+                                        $daysOfStay = ceil($secondsDiff / (60 * 60 * 24));
+                                        $daysOfStay = max(1, $daysOfStay); // Ensure at least 1 day
+
+                                        // Calculate due amount: total occupants × subscription type price × days of stay
+                                        $dueAmount = $tenant->total_occupants * $subscriptionPrice * $daysOfStay;
                                         $totalPaid = $tenant->total_paid ?? 0;
 
                                         // Determine payment status

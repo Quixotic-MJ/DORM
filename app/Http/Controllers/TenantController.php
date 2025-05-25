@@ -170,11 +170,9 @@ class TenantController extends Controller
     public function submitRequest(Request $request)
     {
         $request->validate([
-            'room_number' => 'required|string',
             'issue_type' => 'required|string',
             'description' => 'required|string',
             'priority' => 'required|string',
-            'contact' => 'required|string',
         ]);
 
         $tenant = Auth::guard('tenant')->user();
@@ -192,13 +190,13 @@ class TenantController extends Controller
         // Create the maintenance request
         $maintenanceRequest = new \App\Models\MaintenanceRequest([
             'tenant_id' => $tenant->id,
-            'room_number' => $request->room_number,
+            'room_number' => $tenant->room_number, // Use the room number from the tenant record
             'issue_type' => $request->issue_type,
             'description' => $request->description,
             'priority' => $request->priority,
             'status' => 'Pending',
             'tenant_name' => $tenant->tenant_name,
-            'tenant_contact' => $request->contact,
+            'tenant_contact' => $tenant->tenant_contact, // Use the contact from the tenant record
             'date' => now()->format('Y-m-d'),
         ]);
 

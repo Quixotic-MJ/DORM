@@ -34,12 +34,34 @@ class AuthController extends Controller
             }
 
             // Try to authenticate as tenant
-            if (Auth::guard('tenant')->attempt(['tenant_id' => $request->username, 'password' => $request->password])) {
+            // First check if the tenant exists and is not archived
+            $tenant = \App\Models\Tenant::where('tenant_id', $request->username)
+                ->where(function($query) {
+                    $query->where('status', '!=', 'Archived')
+                          ->orWhereNull('status');
+                })
+                ->first();
+
+            if ($tenant && Auth::guard('tenant')->attempt(['tenant_id' => $request->username, 'password' => $request->password])) {
                 // Tenant authentication passed
                 return response()->json([
                     'success' => true,
                     'redirect' => '/tenant/homepage'
                 ]);
+            }
+
+            // Check if tenant exists but is archived
+            $archivedTenant = \App\Models\Tenant::where('tenant_id', $request->username)
+                ->where('status', 'Archived')
+                ->exists();
+
+            if ($archivedTenant) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => [
+                        'username' => ['This account has been archived and cannot be used.']
+                    ]
+                ], 422);
             }
 
             // Try default web guard as fallback
