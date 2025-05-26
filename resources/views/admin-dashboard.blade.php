@@ -404,16 +404,34 @@
                                                     <h2 class="text-sm font-normal">Paid</h2>
                                                 </div>
                                                 @else
-                                                <div
-                                                    class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
-                                                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M9 3L3 9M3 3L9 9" stroke="currentColor"
-                                                            stroke-width="1.5" stroke-linecap="round"
-                                                            stroke-linejoin="round" />
-                                                    </svg>
-                                                    <h2 class="text-sm font-normal">Overdued</h2>
-                                                </div>
+                                                    @php
+                                                        $currentDate = date('Y-m-d');
+                                                        $leaseEndDate = $tenant->lease_end;
+                                                    @endphp
+
+                                                    @if(strtotime($currentDate) > strtotime($leaseEndDate))
+                                                    <div
+                                                        class="inline-flex items-center px-3 py-1 text-red-500 rounded-full gap-x-2 bg-red-100/60 dark:bg-gray-800">
+                                                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M9 3L3 9M3 3L9 9" stroke="currentColor"
+                                                                stroke-width="1.5" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                        <h2 class="text-sm font-normal">Overdued</h2>
+                                                    </div>
+                                                    @else
+                                                    <div
+                                                        class="inline-flex items-center px-3 py-1 text-yellow-500 rounded-full gap-x-2 bg-yellow-100/60 dark:bg-gray-800">
+                                                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M6 2V6L8 8" stroke="currentColor"
+                                                                stroke-width="1.5" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                        </svg>
+                                                        <h2 class="text-sm font-normal">Pending</h2>
+                                                    </div>
+                                                    @endif
                                                 @endif
                                             </td>
                                             <td
